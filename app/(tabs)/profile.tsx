@@ -1,42 +1,59 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useLanguage } from '@/hooks/use-language';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ProfileScreen() {
+  const { t } = useTranslation();
+  const { currentLanguage, changeLanguage } = useLanguage();
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
+  
+  const languages = [
+    { code: 'en', name: 'English' },
+    { code: 'zh', name: '中文' },
+  ];
+  
   const profileOptions = [
     {
       id: 1,
-      title: 'Account Settings',
+      title: t('profile.accountSettings'),
       icon: 'person.circle.fill',
       color: '#D1D1D6',
     },
     {
       id: 2,
-      title: 'Notifications',
+      title: t('profile.notifications'),
       icon: 'bell.fill',
       color: '#D1D1D6',
     },
     {
       id: 3,
-      title: 'Privacy & Security',
+      title: t('profile.privacySecurity'),
       icon: 'lock.fill',
       color: '#D1D1D6',
     },
     {
       id: 4,
-      title: 'Help & Support',
+      title: t('profile.helpSupport'),
       icon: 'questionmark.circle.fill',
       color: '#D1D1D6',
     },
     {
       id: 5,
-      title: 'About',
+      title: t('profile.about'),
       icon: 'info.circle.fill',
       color: '#D1D1D6',
     },
   ];
+
+  const handleLanguageSelect = async (languageCode: string) => {
+    await changeLanguage(languageCode);
+    setShowLanguageModal(false);
+  };
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
@@ -50,28 +67,43 @@ export default function ProfileScreen() {
               <IconSymbol name="camera.fill" size={16} color="#D1D1D6" />
             </TouchableOpacity>
           </View>
-          <ThemedText type="title" style={styles.name}>John Doe</ThemedText>
-          <ThemedText style={styles.email}>john.doe@example.com</ThemedText>
+          <ThemedText type="title" style={styles.name}>{t('profile.name')}</ThemedText>
+          <ThemedText style={styles.email}>{t('profile.email')}</ThemedText>
         </ThemedView>
 
         <ThemedView style={styles.statsContainer}>
           <View style={styles.statItem}>
             <ThemedText type="defaultSemiBold" style={styles.statNumber}>24</ThemedText>
-            <ThemedText style={styles.statLabel}>Projects</ThemedText>
+            <ThemedText style={styles.statLabel}>{t('profile.projects')}</ThemedText>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
             <ThemedText type="defaultSemiBold" style={styles.statNumber}>156</ThemedText>
-            <ThemedText style={styles.statLabel}>Tasks</ThemedText>
+            <ThemedText style={styles.statLabel}>{t('profile.tasks')}</ThemedText>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.statItem}>
             <ThemedText type="defaultSemiBold" style={styles.statNumber}>89%</ThemedText>
-            <ThemedText style={styles.statLabel}>Complete</ThemedText>
+            <ThemedText style={styles.statLabel}>{t('profile.complete')}</ThemedText>
           </View>
         </ThemedView>
 
         <ThemedView style={styles.optionsContainer}>
+          <TouchableOpacity 
+            style={styles.optionItem}
+            onPress={() => setShowLanguageModal(true)}
+            activeOpacity={0.7}
+          >
+            <View style={[styles.optionIcon, { backgroundColor: '#D1D1D6' }]}>
+              <IconSymbol name="globe" size={20} color="white" />
+            </View>
+            <ThemedText style={styles.optionTitle}>{t('language.selectLanguage')}</ThemedText>
+            <ThemedText style={styles.languageValue}>
+              {currentLanguage === 'en' ? 'English' : '中文'}
+            </ThemedText>
+            <IconSymbol name="chevron.right" size={16} color="#D1D1D6" />
+          </TouchableOpacity>
+          
           {profileOptions.map((option) => (
             <TouchableOpacity
               key={option.id}
@@ -79,7 +111,7 @@ export default function ProfileScreen() {
               activeOpacity={0.7}
             >
               <View style={[styles.optionIcon, { backgroundColor: option.color }]}>
-                <IconSymbol name={option.icon} size={20} color="white" />
+                <IconSymbol name={option.icon as any} size={20} color="white" />
               </View>
               <ThemedText style={styles.optionTitle}>{option.title}</ThemedText>
               <IconSymbol name="chevron.right" size={16} color="#D1D1D6" />
@@ -89,9 +121,55 @@ export default function ProfileScreen() {
 
         <TouchableOpacity style={styles.signOutButton}>
           <IconSymbol name="rectangle.portrait.and.arrow.right" size={20} color="#D1D1D6" />
-          <ThemedText style={styles.signOutText}>Sign Out</ThemedText>
+          <ThemedText style={styles.signOutText}>{t('common.signOut')}</ThemedText>
         </TouchableOpacity>
       </ScrollView>
+
+      <Modal
+        visible={showLanguageModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowLanguageModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalHeader}>
+              <ThemedText type="subtitle" style={styles.modalTitle}>
+                {t('language.selectLanguage')}
+              </ThemedText>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => setShowLanguageModal(false)}
+              >
+                <IconSymbol name="xmark" size={20} color="#D1D1D6" />
+              </TouchableOpacity>
+            </View>
+            
+            <ScrollView style={styles.languageList}>
+              {languages.map((language) => (
+                <TouchableOpacity
+                  key={language.code}
+                  style={[
+                    styles.languageOption,
+                    currentLanguage === language.code && styles.selectedLanguage
+                  ]}
+                  onPress={() => handleLanguageSelect(language.code)}
+                >
+                  <ThemedText style={[
+                    styles.languageOptionText,
+                    currentLanguage === language.code && styles.selectedLanguageText
+                  ]}>
+                    {language.name}
+                  </ThemedText>
+                  {currentLanguage === language.code && (
+                    <IconSymbol name="checkmark" size={20} color="#007AFF" />
+                  )}
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -219,6 +297,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#000000',
   },
+  languageValue: {
+    fontSize: 16,
+    color: '#8E8E93',
+    marginRight: 8,
+  },
   signOutButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -236,5 +319,63 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#000000',
     marginLeft: 8,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    maxHeight: '50%',
+    width: '80%',
+    paddingBottom: 40,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F2F2F7',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#000000',
+  },
+  closeButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#F2F2F7',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  languageList: {
+    maxHeight: 300,
+  },
+  languageOption: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F2F2F7',
+  },
+  selectedLanguage: {
+    backgroundColor: '#F0F8FF',
+  },
+  languageOptionText: {
+    fontSize: 17,
+    color: '#000000',
+  },
+  selectedLanguageText: {
+    color: '#007AFF',
+    fontWeight: '600',
   },
 });

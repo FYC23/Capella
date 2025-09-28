@@ -1,0 +1,67 @@
+{
+  "common": {
+    "welcome": "欢迎使用 Capella",
+    "subtitle": "无障碍语音练习工具",
+    "signOut": "退出登录",
+    "comingSoon": "即将推出",
+    "newToolsInDevelopment": "新工具开发中"
+  },
+  "home": {
+    "title": "欢迎使用 Capella",
+    "subtitle": "无障碍语音练习工具",
+    "todaysProgress": "今日进度",
+    "sessionsFinished": "完成练习",
+    "gamesPlayed": "游戏次数",
+    "recentPractice": "最近练习",
+    "allTools": "所有工具",
+    "usedHoursAgo": "{{hours}}小时前使用",
+    "usedYesterday": "昨天使用",
+    "usedDaysAgo": "{{days}}天前使用",
+    "usedWeekAgo": "1周前使用",
+    "flashcards": "闪卡练习",
+    "storyChain": "故事接龙",
+    "delayedFeedback": "延迟反馈",
+    "pacedSpeaking": "节奏说话",
+    "practiceWithRandomWords": "使用词库中的随机单词练习",
+    "createStoriesUsingWords": "使用3个提供的单词创作故事",
+    "rhythmBasedSpeaking": "基于节奏的说话练习",
+    "audioFeedbackTraining": "音频反馈训练工具"
+  },
+  "resources": {
+    "title": "学习资源",
+    "subtitle": "语音练习教育材料",
+    "speechTechniques": "语音技巧",
+    "speechTechniquesDesc": "学习有效的说话策略",
+    "practiceGuides": "练习指南",
+    "practiceGuidesDesc": "分步练习说明",
+    "researchArticles": "研究文章",
+    "researchArticlesDesc": "基于证据的语音研究",
+    "supportCommunity": "支持社区",
+    "supportCommunityDesc": "与其他从业者联系",
+    "supportHelp": "支持与帮助",
+    "practiceTips": "练习技巧",
+    "getHelp": "获取帮助"
+  },
+  "profile": {
+    "name": "张三",
+    "email": "zhangsan@example.com",
+    "projects": "项目",
+    "tasks": "任务",
+    "complete": "完成",
+    "accountSettings": "账户设置",
+    "notifications": "通知",
+    "privacySecurity": "隐私与安全",
+    "helpSupport": "帮助与支持",
+    "about": "关于"
+  },
+  "language": {
+    "english": "English",
+    "chinese": "中文",
+    "selectLanguage": "选择语言"
+  },
+  "tabs": {
+    "home": "首页",
+    "resources": "资源",
+    "profile": "个人"
+  }
+}

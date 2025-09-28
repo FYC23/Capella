@@ -1,0 +1,67 @@
+{
+  "common": {
+    "welcome": "Welcome to Capella",
+    "subtitle": "Accessible tools for speech practice",
+    "signOut": "Sign Out",
+    "comingSoon": "Coming Soon",
+    "newToolsInDevelopment": "New tools in development"
+  },
+  "home": {
+    "title": "Welcome to Capella",
+    "subtitle": "Accessible tools for speech practice",
+    "todaysProgress": "Today's Progress",
+    "sessionsFinished": "Sessions Finished",
+    "gamesPlayed": "Games Played",
+    "recentPractice": "Recent Practice",
+    "allTools": "All Tools",
+    "usedHoursAgo": "Used {{hours}} hours ago",
+    "usedYesterday": "Used yesterday",
+    "usedDaysAgo": "Used {{days}} days ago",
+    "usedWeekAgo": "Used 1 week ago",
+    "flashcards": "Flashcards",
+    "storyChain": "Story Chain",
+    "delayedFeedback": "Delayed Feedback",
+    "pacedSpeaking": "Paced Speaking",
+    "practiceWithRandomWords": "Practice with random words from word bank",
+    "createStoriesUsingWords": "Create stories using 3 provided words",
+    "rhythmBasedSpeaking": "Rhythm-based speaking practice",
+    "audioFeedbackTraining": "Audio feedback training tool"
+  },
+  "resources": {
+    "title": "Learning Resources",
+    "subtitle": "Educational materials for speech practice",
+    "speechTechniques": "Speech Techniques",
+    "speechTechniquesDesc": "Learn effective speaking strategies",
+    "practiceGuides": "Practice Guides",
+    "practiceGuidesDesc": "Step-by-step practice instructions",
+    "researchArticles": "Research Articles",
+    "researchArticlesDesc": "Evidence-based speech research",
+    "supportCommunity": "Support Community",
+    "supportCommunityDesc": "Connect with other practitioners",
+    "supportHelp": "Support & Help",
+    "practiceTips": "Practice Tips",
+    "getHelp": "Get Help"
+  },
+  "profile": {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "projects": "Projects",
+    "tasks": "Tasks",
+    "complete": "Complete",
+    "accountSettings": "Account Settings",
+    "notifications": "Notifications",
+    "privacySecurity": "Privacy & Security",
+    "helpSupport": "Help & Support",
+    "about": "About"
+  },
+  "language": {
+    "english": "English",
+    "chinese": "中文",
+    "selectLanguage": "Select Language"
+  },
+  "tabs": {
+    "home": "Home",
+    "resources": "Resources",
+    "profile": "Profile"
+  }
+}

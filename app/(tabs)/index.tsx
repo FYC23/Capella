@@ -1,76 +1,79 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
+  const { t } = useTranslation();
+  
   const quickActions = [
     {
       id: 1,
-      title: 'Flashcards',
-      subtitle: 'Used 2 hours ago',
+      title: t('home.flashcards'),
+      subtitle: t('home.usedHoursAgo', { hours: 2 }),
       icon: 'house.fill',
       color: '#D1D1D6',
     },
     {
       id: 2,
-      title: 'Story Chain',
-      subtitle: 'Used yesterday',
+      title: t('home.storyChain'),
+      subtitle: t('home.usedYesterday'),
       icon: 'book.fill',
       color: '#D1D1D6',
     },
     {
       id: 3,
-      title: 'Delayed Feedback',
-      subtitle: 'Used 1 week ago',
+      title: t('home.delayedFeedback'),
+      subtitle: t('home.usedWeekAgo'),
       icon: 'person.fill',
       color: '#D1D1D6',
     },
     {
       id: 4,
-      title: 'Paced Speaking',
-      subtitle: 'Used 3 days ago',
+      title: t('home.pacedSpeaking'),
+      subtitle: t('home.usedDaysAgo', { days: 3 }),
       icon: 'house.fill',
       color: '#D1D1D6',
     },
   ];
 
   const recentItems = [
-    { id: 1, title: 'Flashcards', subtitle: 'Practice with random words from word bank', icon: 'house.fill' },
-    { id: 2, title: 'Story Chain', subtitle: 'Create stories using 3 provided words', icon: 'book.fill' },
-    { id: 3, title: 'Paced Speaking', subtitle: 'Rhythm-based speaking practice', icon: 'person.fill' },
-    { id: 4, title: 'Delayed Feedback', subtitle: 'Audio feedback training tool', icon: 'house.fill' },
-    { id: 5, title: 'Coming Soon', subtitle: 'New tools in development', icon: 'house.fill' },
-    { id: 6, title: 'Coming Soon', subtitle: 'New tools in development', icon: 'book.fill' },
+    { id: 1, title: t('home.flashcards'), subtitle: t('home.practiceWithRandomWords'), icon: 'house.fill' },
+    { id: 2, title: t('home.storyChain'), subtitle: t('home.createStoriesUsingWords'), icon: 'book.fill' },
+    { id: 3, title: t('home.pacedSpeaking'), subtitle: t('home.rhythmBasedSpeaking'), icon: 'person.fill' },
+    { id: 4, title: t('home.delayedFeedback'), subtitle: t('home.audioFeedbackTraining'), icon: 'house.fill' },
+    { id: 5, title: t('common.comingSoon'), subtitle: t('common.newToolsInDevelopment'), icon: 'house.fill' },
+    { id: 6, title: t('common.comingSoon'), subtitle: t('common.newToolsInDevelopment'), icon: 'book.fill' },
   ];
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <ThemedView style={styles.header}>
-          <ThemedText type="title" style={styles.title}>Welcome to Capella</ThemedText>
+          <ThemedText type="title" style={styles.title}>{t('home.title')}</ThemedText>
           <ThemedText style={styles.subtitle}>
-            Accessible tools for speech practice
+            {t('home.subtitle')}
           </ThemedText>
         </ThemedView>
 
         <ThemedView style={styles.statsContainer}>
-          <ThemedText type="subtitle" style={styles.sectionTitle}>Today's Progress</ThemedText>
+          <ThemedText type="subtitle" style={styles.sectionTitle}>{t('home.todaysProgress')}</ThemedText>
           <View style={styles.statsGrid}>
             <View style={styles.statCard}>
               <ThemedText type="defaultSemiBold" style={styles.statNumber}>12</ThemedText>
-              <ThemedText style={styles.statLabel}>Sessions Finished</ThemedText>
+              <ThemedText style={styles.statLabel}>{t('home.sessionsFinished')}</ThemedText>
             </View>
             <View style={styles.statCard}>
               <ThemedText type="defaultSemiBold" style={styles.statNumber}>3</ThemedText>
-              <ThemedText style={styles.statLabel}>Games Played</ThemedText>
+              <ThemedText style={styles.statLabel}>{t('home.gamesPlayed')}</ThemedText>
             </View>
           </View>
         </ThemedView>
 
         <ThemedView style={styles.quickActionsContainer}>
-          <ThemedText type="subtitle" style={styles.sectionTitle}>Recent Practice</ThemedText>
+          <ThemedText type="subtitle" style={styles.sectionTitle}>{t('home.recentPractice')}</ThemedText>
           <View style={styles.quickActionsGrid}>
             {quickActions.map((action) => (
               <TouchableOpacity
@@ -93,7 +96,7 @@ export default function HomeScreen() {
         </ThemedView>
 
         <ThemedView style={styles.recentContainer}>
-          <ThemedText type="subtitle" style={styles.sectionTitle}>All Tools</ThemedText>
+          <ThemedText type="subtitle" style={styles.sectionTitle}>{t('home.allTools')}</ThemedText>
           {recentItems.map((item) => (
             <TouchableOpacity
               key={item.id}

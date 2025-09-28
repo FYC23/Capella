@@ -1,36 +1,39 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ResourcesScreen() {
+  const { t } = useTranslation();
+  
   const resources = [
     {
       id: 1,
-      title: 'Speech Techniques',
-      description: 'Learn effective speaking strategies',
+      title: t('resources.speechTechniques'),
+      description: t('resources.speechTechniquesDesc'),
       icon: 'doc.text.fill',
       color: '#D1D1D6',
     },
     {
       id: 2,
-      title: 'Practice Guides',
-      description: 'Step-by-step practice instructions',
+      title: t('resources.practiceGuides'),
+      description: t('resources.practiceGuidesDesc'),
       icon: 'play.circle.fill',
       color: '#D1D1D6',
     },
     {
       id: 3,
-      title: 'Research Articles',
-      description: 'Evidence-based speech research',
+      title: t('resources.researchArticles'),
+      description: t('resources.researchArticlesDesc'),
       icon: 'link.circle.fill',
       color: '#D1D1D6',
     },
     {
       id: 4,
-      title: 'Support Community',
-      description: 'Connect with other practitioners',
+      title: t('resources.supportCommunity'),
+      description: t('resources.supportCommunityDesc'),
       icon: 'person.3.fill',
       color: '#D1D1D6',
     },
@@ -40,9 +43,9 @@ export default function ResourcesScreen() {
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <ThemedView style={styles.header}>
-          <ThemedText type="title" style={styles.title}>Learning Resources</ThemedText>
+          <ThemedText type="title" style={styles.title}>{t('resources.title')}</ThemedText>
           <ThemedText style={styles.subtitle}>
-            Educational materials for speech practice
+            {t('resources.subtitle')}
           </ThemedText>
         </ThemedView>
 
@@ -71,16 +74,16 @@ export default function ResourcesScreen() {
 
         <ThemedView style={styles.section}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>
-            Support & Help
+            {t('resources.supportHelp')}
           </ThemedText>
           <TouchableOpacity style={styles.linkButton}>
             <IconSymbol name="questionmark.circle.fill" size={20} color="#D1D1D6" />
-            <ThemedText style={styles.linkText}>Practice Tips</ThemedText>
+            <ThemedText style={styles.linkText}>{t('resources.practiceTips')}</ThemedText>
             <IconSymbol name="chevron.right" size={16} color="#C7C7CC" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.linkButton}>
             <IconSymbol name="envelope.fill" size={20} color="#D1D1D6" />
-            <ThemedText style={styles.linkText}>Get Help</ThemedText>
+            <ThemedText style={styles.linkText}>{t('resources.getHelp')}</ThemedText>
             <IconSymbol name="chevron.right" size={16} color="#C7C7CC" />
           </TouchableOpacity>
         </ThemedView>
