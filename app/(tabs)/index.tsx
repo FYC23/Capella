@@ -1,98 +1,267 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { IconSymbol } from '@/components/ui/icon-symbol';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const quickActions = [
+    {
+      id: 1,
+      title: 'Flashcards',
+      subtitle: 'Used 2 hours ago',
+      icon: 'house.fill',
+      color: '#D1D1D6',
+    },
+    {
+      id: 2,
+      title: 'Story Chain',
+      subtitle: 'Used yesterday',
+      icon: 'book.fill',
+      color: '#D1D1D6',
+    },
+    {
+      id: 3,
+      title: 'Delayed Feedback',
+      subtitle: 'Used 1 week ago',
+      icon: 'person.fill',
+      color: '#D1D1D6',
+    },
+    {
+      id: 4,
+      title: 'Paced Speaking',
+      subtitle: 'Used 3 days ago',
+      icon: 'house.fill',
+      color: '#D1D1D6',
+    },
+  ];
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  const recentItems = [
+    { id: 1, title: 'Flashcards', subtitle: 'Practice with random words from word bank', icon: 'house.fill' },
+    { id: 2, title: 'Story Chain', subtitle: 'Create stories using 3 provided words', icon: 'book.fill' },
+    { id: 3, title: 'Paced Speaking', subtitle: 'Rhythm-based speaking practice', icon: 'person.fill' },
+    { id: 4, title: 'Delayed Feedback', subtitle: 'Audio feedback training tool', icon: 'house.fill' },
+    { id: 5, title: 'Coming Soon', subtitle: 'New tools in development', icon: 'house.fill' },
+    { id: 6, title: 'Coming Soon', subtitle: 'New tools in development', icon: 'book.fill' },
+  ];
+
+  return (
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        <ThemedView style={styles.header}>
+          <ThemedText type="title" style={styles.title}>Welcome to Capella</ThemedText>
+          <ThemedText style={styles.subtitle}>
+            Accessible tools for speech practice
+          </ThemedText>
+        </ThemedView>
+
+        <ThemedView style={styles.statsContainer}>
+          <ThemedText type="subtitle" style={styles.sectionTitle}>Today's Progress</ThemedText>
+          <View style={styles.statsGrid}>
+            <View style={styles.statCard}>
+              <ThemedText type="defaultSemiBold" style={styles.statNumber}>12</ThemedText>
+              <ThemedText style={styles.statLabel}>Sessions Finished</ThemedText>
+            </View>
+            <View style={styles.statCard}>
+              <ThemedText type="defaultSemiBold" style={styles.statNumber}>3</ThemedText>
+              <ThemedText style={styles.statLabel}>Games Played</ThemedText>
+            </View>
+          </View>
+        </ThemedView>
+
+        <ThemedView style={styles.quickActionsContainer}>
+          <ThemedText type="subtitle" style={styles.sectionTitle}>Recent Practice</ThemedText>
+          <View style={styles.quickActionsGrid}>
+            {quickActions.map((action) => (
+              <TouchableOpacity
+                key={action.id}
+                style={styles.quickActionCard}
+                activeOpacity={0.7}
+              >
+                <View style={[styles.quickActionIcon, { backgroundColor: action.color }]}>
+                  <IconSymbol name="house.fill" size={24} color="white" />
+                </View>
+                <ThemedText type="defaultSemiBold" style={styles.quickActionTitle}>
+                  {action.title}
+                </ThemedText>
+                <ThemedText style={styles.quickActionSubtitle}>
+                  {action.subtitle}
+                </ThemedText>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ThemedView>
+
+        <ThemedView style={styles.recentContainer}>
+          <ThemedText type="subtitle" style={styles.sectionTitle}>All Tools</ThemedText>
+          {recentItems.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              style={styles.recentItem}
+              activeOpacity={0.7}
+            >
+              <View style={styles.recentIcon}>
+                <IconSymbol name="house.fill" size={20} color="#D1D1D6" />
+              </View>
+              <View style={styles.recentContent}>
+                <ThemedText type="defaultSemiBold" style={styles.recentTitle}>
+                  {item.title}
+                </ThemedText>
+                <ThemedText style={styles.recentSubtitle}>
+                  {item.subtitle}
+                </ThemedText>
+              </View>
+              <IconSymbol name="chevron.right" size={16} color="#D1D1D6" />
+            </TouchableOpacity>
+          ))}
+        </ThemedView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: '700',
+    marginBottom: 8,
+    color: '#000000',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#000000',
+  },
+  quickActionsContainer: {
+    paddingHorizontal: 20,
+    marginTop: 10,
+  },
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: '600',
+    marginBottom: 16,
+    color: '#000000',
+  },
+  quickActionsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  quickActionCard: {
+    width: '48%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 12,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#F2F2F7',
+  },
+  quickActionIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  quickActionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: 4,
+    color: '#000000',
+  },
+  quickActionSubtitle: {
+    fontSize: 13,
+    color: '#000000',
+    textAlign: 'center',
+  },
+  recentContainer: {
+    paddingHorizontal: 20,
+    marginTop: 30,
+  },
+  recentItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
     marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#F2F2F7',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  recentIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    backgroundColor: '#F8F9FA',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  recentContent: {
+    flex: 1,
+  },
+  recentTitle: {
+    fontSize: 17,
+    fontWeight: '600',
+    marginBottom: 2,
+    color: '#000000',
+  },
+  recentSubtitle: {
+    fontSize: 14,
+    color: '#000000',
+  },
+  statsContainer: {
+    paddingHorizontal: 20,
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  statsGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  statCard: {
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    borderRadius: 16,
+    paddingVertical: 24,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    marginHorizontal: 4,
+    minHeight: 100,
+  },
+  statNumber: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#000000',
+    marginBottom: 8,
+    lineHeight: 32,
+  },
+  statLabel: {
+    fontSize: 14,
+    color: '#000000',
+    fontWeight: '500',
+    textAlign: 'center',
   },
 });
