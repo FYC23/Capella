@@ -1,12 +1,17 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
+  
+  const navigateToScreen = (screenName: string) => {
+    router.push(`/${screenName}` as any);
+  };
   
   const quickActions = [
     {
@@ -15,6 +20,7 @@ export default function HomeScreen() {
       subtitle: t('home.usedHoursAgo', { hours: 2 }),
       icon: 'house.fill',
       color: '#D1D1D6',
+      screen: 'flashcards',
     },
     {
       id: 2,
@@ -22,6 +28,7 @@ export default function HomeScreen() {
       subtitle: t('home.usedYesterday'),
       icon: 'book.fill',
       color: '#D1D1D6',
+      screen: 'story-chain',
     },
     {
       id: 3,
@@ -29,6 +36,7 @@ export default function HomeScreen() {
       subtitle: t('home.usedWeekAgo'),
       icon: 'person.fill',
       color: '#D1D1D6',
+      screen: 'delayed-feedback',
     },
     {
       id: 4,
@@ -36,14 +44,15 @@ export default function HomeScreen() {
       subtitle: t('home.usedDaysAgo', { days: 3 }),
       icon: 'house.fill',
       color: '#D1D1D6',
+      screen: 'paced-speaking',
     },
   ];
 
   const recentItems = [
-    { id: 1, title: t('home.flashcards'), subtitle: t('home.practiceWithRandomWords'), icon: 'house.fill' },
-    { id: 2, title: t('home.storyChain'), subtitle: t('home.createStoriesUsingWords'), icon: 'book.fill' },
-    { id: 3, title: t('home.pacedSpeaking'), subtitle: t('home.rhythmBasedSpeaking'), icon: 'person.fill' },
-    { id: 4, title: t('home.delayedFeedback'), subtitle: t('home.audioFeedbackTraining'), icon: 'house.fill' },
+    { id: 1, title: t('home.flashcards'), subtitle: t('home.practiceWithRandomWords'), icon: 'house.fill', screen: 'flashcards' },
+    { id: 2, title: t('home.storyChain'), subtitle: t('home.createStoriesUsingWords'), icon: 'book.fill', screen: 'story-chain' },
+    { id: 3, title: t('home.pacedSpeaking'), subtitle: t('home.rhythmBasedSpeaking'), icon: 'person.fill', screen: 'paced-speaking' },
+    { id: 4, title: t('home.delayedFeedback'), subtitle: t('home.audioFeedbackTraining'), icon: 'house.fill', screen: 'delayed-feedback' },
     { id: 5, title: t('common.comingSoon'), subtitle: t('common.newToolsInDevelopment'), icon: 'house.fill' },
     { id: 6, title: t('common.comingSoon'), subtitle: t('common.newToolsInDevelopment'), icon: 'book.fill' },
   ];
@@ -80,6 +89,7 @@ export default function HomeScreen() {
                 key={action.id}
                 style={styles.quickActionCard}
                 activeOpacity={0.7}
+                onPress={() => navigateToScreen(action.screen)}
               >
                 <View style={[styles.quickActionIcon, { backgroundColor: action.color }]}>
                   <IconSymbol name="house.fill" size={24} color="white" />
@@ -102,6 +112,7 @@ export default function HomeScreen() {
               key={item.id}
               style={styles.recentItem}
               activeOpacity={0.7}
+              onPress={() => item.screen ? navigateToScreen(item.screen) : null}
             >
               <View style={styles.recentIcon}>
                 <IconSymbol name="house.fill" size={20} color="#D1D1D6" />

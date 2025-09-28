@@ -63,5 +63,50 @@
     "home": "首页",
     "resources": "资源",
     "profile": "个人"
+  },
+  "flashcards": {
+    "title": "闪卡练习",
+    "description": "使用词库中的随机单词练习发音",
+    "wordBank": "词库",
+    "startPractice": "开始练习",
+    "wordsPracticed": "已练习单词",
+    "accuracy": "准确率",
+    "difficulty": {
+      "easy": "简单",
+      "medium": "中等",
+      "hard": "困难"
+    }
+  },
+  "storyChain": {
+    "title": "故事接龙",
+    "description": "使用提供的单词创作创意故事",
+    "currentPrompt": "当前提示",
+    "yourStory": "你的故事",
+    "exampleStories": "示例故事",
+    "submitStory": "提交故事",
+    "storyPlaceholder": "使用上面的单词写你的故事..."
+  },
+  "delayedFeedback": {
+    "title": "延迟反馈",
+    "description": "练习说话并接收音频反馈",
+    "tapToRecord": "点击录音",
+    "recording": "录音中...",
+    "feedback": "反馈",
+    "practicePhrases": "练习短语",
+    "practiceThis": "练习这个",
+    "sessionsToday": "今日练习",
+    "accuracyRate": "准确率"
+  },
+  "pacedSpeaking": {
+    "title": "节奏说话",
+    "description": "练习有节奏和时机的说话",
+    "tempo": "节拍",
+    "bpm": "每分钟节拍",
+    "practiceText": "练习文本",
+    "nextText": "下一个文本",
+    "rhythmExercises": "节奏练习",
+    "start": "开始",
+    "sessionsToday": "今日练习",
+    "rhythmAccuracy": "节奏准确率"
   }
 }

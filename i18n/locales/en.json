@@ -63,5 +63,50 @@
     "home": "Home",
     "resources": "Resources",
     "profile": "Profile"
+  },
+  "flashcards": {
+    "title": "Flashcards",
+    "description": "Practice pronunciation with random words from your word bank",
+    "wordBank": "Word Bank",
+    "startPractice": "Start Practice",
+    "wordsPracticed": "Words Practiced",
+    "accuracy": "Accuracy",
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    }
+  },
+  "storyChain": {
+    "title": "Story Chain",
+    "description": "Create creative stories using the provided words",
+    "currentPrompt": "Current Prompt",
+    "yourStory": "Your Story",
+    "exampleStories": "Example Stories",
+    "submitStory": "Submit Story",
+    "storyPlaceholder": "Write your story using the words above..."
+  },
+  "delayedFeedback": {
+    "title": "Delayed Feedback",
+    "description": "Practice speaking and receive audio feedback",
+    "tapToRecord": "Tap to Record",
+    "recording": "Recording...",
+    "feedback": "Feedback",
+    "practicePhrases": "Practice Phrases",
+    "practiceThis": "Practice This",
+    "sessionsToday": "Sessions Today",
+    "accuracyRate": "Accuracy Rate"
+  },
+  "pacedSpeaking": {
+    "title": "Paced Speaking",
+    "description": "Practice speaking with rhythm and timing",
+    "tempo": "Tempo",
+    "bpm": "BPM",
+    "practiceText": "Practice Text",
+    "nextText": "Next Text",
+    "rhythmExercises": "Rhythm Exercises",
+    "start": "Start",
+    "sessionsToday": "Sessions Today",
+    "rhythmAccuracy": "Rhythm Accuracy"
   }
 }
