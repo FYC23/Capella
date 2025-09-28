@@ -440,7 +440,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: '100%',
     maxWidth: 300,
-    maxHeight: '80%',
+    minHeight: '42%',
+    maxHeight: '60%',
     overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: {
@@ -469,7 +470,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   pickerScrollView: {
-    maxHeight: 250,
+    flex: 1,
     borderRadius: 0,
   },
   pickerOption: {
