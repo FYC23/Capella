@@ -1,10 +1,11 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { router } from 'expo-router';
+import { incrementRating } from '@/utils/usageStats';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 // --- Load your JSON word bank (replace path as needed) ---
 import wordBankData from '@/assets/word-bank/word-bank.json';
@@ -39,9 +40,10 @@ export default function PracticeScreen() {
     return words[0];
   };
 
-  const handleResponse = (difficulty: string) => {
+  const handleResponse = async (difficulty: string) => {
     if (!currentWord) return;
     // Adjust score based on performance
+    await incrementRating('flashcards');
     const newBank = wordBank.map(w => {
       if (w.simplified_chinese === currentWord["simplified_chinese"]) {
         let delta = 0;
@@ -60,7 +62,6 @@ export default function PracticeScreen() {
   };
 
   const handleReveal = () => setShowPinyin(!isPinyinShown);
-  const handleExit = () => router.back();
 
   if (!currentWord) return null;
 

@@ -1,13 +1,14 @@
 // app/story-chain.tsx
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import wordBankData from '@/assets/word-bank/word-bank.json';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import { incrementRating } from '@/utils/usageStats';
 import { router } from 'expo-router';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import wordBankData from '@/assets/word-bank/word-bank.json';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // ---- Types (lightweight to keep keys with hyphens) ----
 type WordItem = {
@@ -86,7 +87,9 @@ export default function StoryChainScreen() {
   };
 
   // Adjust score based on performance
-  const handleResponse = (difficulty: string) => {
+  const handleResponse = async (difficulty: string) => {
+    await incrementRating('storyChain');
+
     const ids = new Set(promptWords.map((w) => w['simplified_chinese']));
     const updated = bank.map(w => {
       if (ids.has(w['simplified_chinese'])) {

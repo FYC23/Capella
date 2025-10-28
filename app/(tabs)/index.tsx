@@ -1,82 +1,108 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { router } from 'expo-router';
+import { getLastUsedMap, relativeLastUsedLabel, touchLastUsed } from '@/utils/lastUsed';
+import { router, useFocusEffect } from 'expo-router'; // ⬅ add useFocusEffect
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { getUsageSnapshot } from '@/utils/usageStats';
+
+type Action = {
+  id: number;
+  title: string;
+  subtitle?: string;
+  icon: string;
+  color: string;
+  screen: string;
+  lastUsed?: number;
+};
 
 export default function HomeScreen() {
   const { t } = useTranslation();
-  
-  const navigateToScreen = (screenName: string) => {
+  const [lastUsedMap, setLastUsedMap] = useState<Record<string, number>>({});
+
+  // Load/refresh lastUsed on focus
+  useFocusEffect(
+    useCallback(() => {
+      let mounted = true;
+      (async () => {
+        const map = await getLastUsedMap();
+        if (mounted) setLastUsedMap(map);
+      })();
+      return () => { mounted = false; };
+    }, [])
+  );
+
+  const baseActions: Action[] = useMemo(
+    () => [
+      { id: 1, title: t('home.flashcards'),       icon: 'house.fill', color: '#D1D1D6', screen: 'flashcards' },
+      { id: 2, title: t('home.storyChain'),       icon: 'book.fill',  color: '#D1D1D6', screen: 'story-chain' },
+      { id: 3, title: t('home.delayedFeedback'),  icon: 'person.fill',color: '#D1D1D6', screen: 'delayed-feedback' },
+      { id: 4, title: t('home.pacedSpeaking'),    icon: 'house.fill', color: '#D1D1D6', screen: 'paced-speaking' },
+    ],
+    [t]
+  );
+
+  // Merge lastUsed + sort desc
+  const quickActions = useMemo(() => {
+    const merged = baseActions.map(a => ({ ...a, lastUsed: lastUsedMap[a.screen] }));
+    // If never used, push them to the end by treating lastUsed as -Infinity
+    merged.sort((a, b) => (b.lastUsed ?? -Infinity) - (a.lastUsed ?? -Infinity));
+    return merged;
+  }, [baseActions, lastUsedMap]);
+
+  const navigateToScreen = async (screenName: string) => {
+    // Touch now so the list reorders immediately
+    await touchLastUsed(screenName);
+    // Optimistically update local state without waiting for focus refresh
+    setLastUsedMap(prev => ({ ...prev, [screenName]: Date.now() }));
     router.push(`/${screenName}` as any);
   };
-  
-  const quickActions = [
-    {
-      id: 1,
-      title: t('home.flashcards'),
-      subtitle: t('home.usedHoursAgo', { hours: 2 }),
-      icon: 'house.fill',
-      color: '#D1D1D6',
-      screen: 'flashcards',
-    },
-    {
-      id: 2,
-      title: t('home.storyChain'),
-      subtitle: t('home.usedYesterday'),
-      icon: 'book.fill',
-      color: '#D1D1D6',
-      screen: 'story-chain',
-    },
-    {
-      id: 3,
-      title: t('home.delayedFeedback'),
-      subtitle: t('home.usedWeekAgo'),
-      icon: 'person.fill',
-      color: '#D1D1D6',
-      screen: 'delayed-feedback',
-    },
-    {
-      id: 4,
-      title: t('home.pacedSpeaking'),
-      subtitle: t('home.usedDaysAgo', { days: 3 }),
-      icon: 'house.fill',
-      color: '#D1D1D6',
-      screen: 'paced-speaking',
-    },
-  ];
 
-  const recentItems = [
+  const allItems = [
     { id: 1, title: t('home.flashcards'), subtitle: t('home.practiceWithRandomWords'), icon: 'house.fill', screen: 'flashcards' },
     { id: 2, title: t('home.storyChain'), subtitle: t('home.createStoriesUsingWords'), icon: 'book.fill', screen: 'story-chain' },
     { id: 3, title: t('home.pacedSpeaking'), subtitle: t('home.rhythmBasedSpeaking'), icon: 'person.fill', screen: 'paced-speaking' },
     { id: 4, title: t('home.delayedFeedback'), subtitle: t('home.audioFeedbackTraining'), icon: 'house.fill', screen: 'delayed-feedback' },
     { id: 5, title: t('common.comingSoon'), subtitle: t('common.newToolsInDevelopment'), icon: 'house.fill' },
-    { id: 6, title: t('common.comingSoon'), subtitle: t('common.newToolsInDevelopment'), icon: 'book.fill' },
   ];
+
+
+  // usage stats
+
+  const [stats, setStats] = useState<{ today: number; total: number }>({ today: 0, total: 0 });
+
+  useFocusEffect(
+    useCallback(() => {
+      let mounted = true;
+      (async () => {
+        const snap = await getUsageSnapshot();
+        if (mounted) setStats(snap);
+      })();
+      return () => { mounted = false; };
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <ThemedView style={styles.header}>
           <ThemedText type="title" style={styles.title}>{t('home.title')}</ThemedText>
-          <ThemedText style={styles.subtitle}>
-            {t('home.subtitle')}
-          </ThemedText>
+          <ThemedText style={styles.subtitle}>{t('home.subtitle')}</ThemedText>
         </ThemedView>
 
         <ThemedView style={styles.statsContainer}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>{t('home.todaysProgress')}</ThemedText>
           <View style={styles.statsGrid}>
             <View style={styles.statCard}>
-              <ThemedText type="defaultSemiBold" style={styles.statNumber}>12</ThemedText>
-              <ThemedText style={styles.statLabel}>{t('home.sessionsFinished')}</ThemedText>
+              <ThemedText type="defaultSemiBold" style={styles.statNumber}>{stats.today}</ThemedText>
+              <ThemedText style={styles.statLabel}>{t('home.sessionsFinishedToday')}</ThemedText>
             </View>
             <View style={styles.statCard}>
-              <ThemedText type="defaultSemiBold" style={styles.statNumber}>3</ThemedText>
-              <ThemedText style={styles.statLabel}>{t('home.gamesPlayed')}</ThemedText>
+              <ThemedText type="defaultSemiBold" style={styles.statNumber}>{stats.total}</ThemedText>
+              <ThemedText style={styles.statLabel}>{t('home.sessionsFinishedTotal')}</ThemedText>
             </View>
           </View>
         </ThemedView>
@@ -84,30 +110,33 @@ export default function HomeScreen() {
         <ThemedView style={styles.quickActionsContainer}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>{t('home.recentPractice')}</ThemedText>
           <View style={styles.quickActionsGrid}>
-            {quickActions.map((action) => (
-              <TouchableOpacity
-                key={action.id}
-                style={styles.quickActionCard}
-                activeOpacity={0.7}
-                onPress={() => navigateToScreen(action.screen)}
-              >
-                <View style={[styles.quickActionIcon, { backgroundColor: action.color }]}>
-                  <IconSymbol name="house.fill" size={24} color="white" />
-                </View>
-                <ThemedText type="defaultSemiBold" style={styles.quickActionTitle}>
-                  {action.title}
-                </ThemedText>
-                <ThemedText style={styles.quickActionSubtitle}>
-                  {action.subtitle}
-                </ThemedText>
-              </TouchableOpacity>
-            ))}
+            {quickActions.map((action) => {
+              const rel = relativeLastUsedLabel(action.lastUsed);
+              return (
+                <TouchableOpacity
+                  key={action.id}
+                  style={styles.quickActionCard}
+                  activeOpacity={0.7}
+                  onPress={() => navigateToScreen(action.screen)}
+                >
+                  <View style={[styles.quickActionIcon, { backgroundColor: action.color }]}>
+                    <IconSymbol name="house.fill" size={24} color="white" />
+                  </View>
+                  <ThemedText type="defaultSemiBold" style={styles.quickActionTitle}>
+                    {action.title}
+                  </ThemedText>
+                  <ThemedText style={styles.quickActionSubtitle}>
+                    {t(rel.key, rel.values)}
+                  </ThemedText>
+                </TouchableOpacity>
+              );
+            })}
           </View>
         </ThemedView>
 
         <ThemedView style={styles.recentContainer}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>{t('home.allTools')}</ThemedText>
-          {recentItems.map((item) => (
+          {allItems.map((item) => (
             <TouchableOpacity
               key={item.id}
               style={styles.recentItem}
@@ -133,6 +162,9 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
+
+// ... your styles stay the same
+
 
 const styles = StyleSheet.create({
   container: {
