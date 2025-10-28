@@ -1,80 +1,111 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { IconSymbol } from '@/components/ui/icon-symbol';
 import { router } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function FlashcardsScreen() {
-  const { t } = useTranslation();
+// --- Load your JSON word bank (replace path as needed) ---
+import wordBankData from '@/assets/word-bank/word-bank.json';
 
-  const handleBack = () => {
-    router.back();
+export default function PracticeScreen() {
+  const { t } = useTranslation();
+  
+  const [wordBank, setWordBank] = useState<any[]>([]);
+  const [currentWord, setCurrentWord] = useState<any | null>(null);
+  const [isPinyinShown, setShowPinyin] = useState(false);
+
+  useEffect(() => {
+    // Initialize spaced repetition queue
+    const words = wordBankData.map(w => ({
+      ...w,
+      score: 0, // lower = harder, higher = easier
+    }));
+    setWordBank(words);
+    setCurrentWord(getNextWord(words));
+  }, []);
+
+  const getNextWord = (words: any[]) => {
+    // Weighted selection: words with lower score have higher chance to appear
+    const weights = words.map(w => 1 / (1 + Math.exp(w.score))); // logistic weighting
+    const total = weights.reduce((a, b) => a + b, 0);
+    const r = Math.random() * total;
+    let sum = 0;
+    for (let i = 0; i < words.length; i++) {
+      sum += weights[i];
+      if (r <= sum) return words[i];
+    }
+    return words[0];
   };
 
-  const wordBank = [
-    { word: 'apple', difficulty: 'easy' },
-    { word: 'beautiful', difficulty: 'medium' },
-    { word: 'extraordinary', difficulty: 'hard' },
-    { word: 'communication', difficulty: 'medium' },
-    { word: 'serendipity', difficulty: 'hard' },
-  ];
+  const handleResponse = (difficulty: string) => {
+    if (!currentWord) return;
+    // Adjust score based on performance
+    const newBank = wordBank.map(w => {
+      if (w.simplified_chinese === currentWord["simplified_chinese"]) {
+        let delta = 0;
+        if (difficulty === t('difficulty.easy')) delta = 1.0;
+        else if (difficulty === t('difficulty.medium')) delta = 0.3;
+        else if (difficulty === t('difficulty.hard')) delta = -0.7;
+        else if (difficulty === t('difficulty.doNotKnow')) delta = -1.0;
+        return { ...w, score: Math.max(-3, Math.min(3, w.score + delta)) };
+      }
+      return w;
+    });
+
+    setWordBank(newBank);
+    setShowPinyin(false);
+    setCurrentWord(getNextWord(newBank));
+  };
+
+  const handleReveal = () => setShowPinyin(!isPinyinShown);
+  const handleExit = () => router.back();
+
+  if (!currentWord) return null;
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-          <IconSymbol name="chevron.left" size={24} color="#007AFF" />
-        </TouchableOpacity>
-        <ThemedText type="title" style={styles.title}>{t('home.flashcards')}</ThemedText>
-        <View style={styles.placeholder} />
-      </View>
-
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        <ThemedView style={styles.contentContainer}>
-          <ThemedText style={styles.description}>
-            {t('home.practiceWithRandomWords')}
+      {/* Flashcard */}
+      <ThemedText style={styles.description}>
+        {t('home.practiceWithRandomWords')}
+      </ThemedText>
+      <ThemedView style={styles.flashcardContainer}>
+        <ThemedText style={styles.flashcardText}>
+          {currentWord["simplified_chinese"]}
+        </ThemedText>
+        {isPinyinShown && (
+          <ThemedText style={styles.pinyinText}>
+            {currentWord.pinyin}
           </ThemedText>
+        )}
+      </ThemedView>
 
-          <View style={styles.statsContainer}>
-            <View style={styles.statCard}>
-              <ThemedText type="defaultSemiBold" style={styles.statNumber}>24</ThemedText>
-              <ThemedText style={styles.statLabel}>Words Practiced</ThemedText>
-            </View>
-            <View style={styles.statCard}>
-              <ThemedText type="defaultSemiBold" style={styles.statNumber}>85%</ThemedText>
-              <ThemedText style={styles.statLabel}>Accuracy</ThemedText>
-            </View>
-          </View>
+      {/* Reveal Button */}
+      <TouchableOpacity onPress={handleReveal} style={styles.revealButton}>
+        <ThemedText style={styles.revealButtonText}>
+          {isPinyinShown ? t('flashcards.hidePinyin') : t('flashcards.showPinyin')}
+        </ThemedText>
+      </TouchableOpacity>
 
-          <View style={styles.wordBankContainer}>
-            <ThemedText type="subtitle" style={styles.sectionTitle}>Word Bank</ThemedText>
-            {wordBank.map((item, index) => (
-              <View key={index} style={styles.wordItem}>
-                <View style={styles.wordContent}>
-                  <ThemedText type="defaultSemiBold" style={styles.wordText}>
-                    {item.word}
-                  </ThemedText>
-                  <View style={[styles.difficultyBadge, 
-                    item.difficulty === 'easy' ? styles.easyBadge :
-                    item.difficulty === 'medium' ? styles.mediumBadge : styles.hardBadge
-                  ]}>
-                    <ThemedText style={styles.difficultyText}>
-                      {item.difficulty}
-                    </ThemedText>
-                  </View>
-                </View>
-              </View>
-            ))}
-          </View>
-
-          <TouchableOpacity style={styles.startButton}>
-            <ThemedText style={styles.startButtonText}>Start Practice</ThemedText>
-            <IconSymbol name="play.fill" size={20} color="white" />
+      {/* Difficulty Buttons */}
+      <View style={styles.buttonGroup}>
+        {[t('difficulty.easy'), t('difficulty.medium'), t('difficulty.hard'), t('difficulty.doNotKnow')].map((label, idx) => (
+          <TouchableOpacity
+            key={idx}
+            style={[
+              styles.difficultyButton,
+              label === t('difficulty.easy') && styles.easy,
+              label === t('difficulty.medium') && styles.medium,
+              label === t('difficulty.hard') && styles.hard,
+              label === t('difficulty.doNotKnow') && styles.unknown,
+            ]}
+            onPress={() => handleResponse(label)}
+          >
+            <ThemedText style={styles.difficultyText}>{label}</ThemedText>
           </TouchableOpacity>
-        </ThemedView>
-      </ScrollView>
+        ))}
+      </View>
     </SafeAreaView>
   );
 }
@@ -83,15 +114,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+    paddingHorizontal: 20,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
     paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E5EA',
   },
   backButton: {
     padding: 8,
@@ -101,108 +130,68 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#000000',
   },
-  placeholder: {
-    width: 40,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  contentContainer: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-  },
+  placeholder: { width: 40 },
+
+  
   description: {
     fontSize: 16,
     color: '#000000',
     marginBottom: 24,
     lineHeight: 22,
   },
-  statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 32,
-  },
-  statCard: {
-    flex: 1,
+
+  flashcardContainer: {
     backgroundColor: '#F8F9FA',
-    borderRadius: 16,
-    paddingVertical: 20,
-    paddingHorizontal: 16,
-    alignItems: 'center',
-    marginHorizontal: 4,
-  },
-  statNumber: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#000000',
-    marginBottom: 4,
-  },
-  statLabel: {
-    fontSize: 14,
-    color: '#000000',
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  wordBankContainer: {
-    marginBottom: 32,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 16,
-    color: '#000000',
-  },
-  wordItem: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 8,
-    borderWidth: 1,
-    borderColor: '#F2F2F7',
-  },
-  wordContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  wordText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#000000',
-  },
-  difficultyBadge: {
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  easyBadge: {
-    backgroundColor: '#E8F5E8',
-  },
-  mediumBadge: {
-    backgroundColor: '#FFF3CD',
-  },
-  hardBadge: {
-    backgroundColor: '#F8D7DA',
-  },
-  difficultyText: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: '#000000',
-  },
-  startButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 16,
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    flexDirection: 'row',
+    borderRadius: 20,
+    marginTop: 40,
+    paddingVertical: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
   },
-  startButtonText: {
-    color: 'white',
+  flashcardText: {
+    fontSize: 60,
+    fontWeight: '700',
+    color: '#000',
+    paddingVertical: 30,
+  },
+  pinyinText: {
+    marginTop: 12,
+    fontSize: 22,
+    color: '#444',
+  },
+  revealButton: {
+    marginTop: 30,
+    alignSelf: 'center',
+    backgroundColor: '#E8F0FE',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+  },
+  revealButtonText: {
+    color: '#007AFF',
     fontSize: 16,
     fontWeight: '600',
-    marginRight: 8,
+  },
+  buttonGroup: {
+    marginTop: 50,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  difficultyButton: {
+    flexBasis: '48%',
+    borderRadius: 14,
+    paddingVertical: 16,
+    marginBottom: 12,
+    alignItems: 'center',
+  },
+  easy: { backgroundColor: '#E8F5E8' },
+  medium: { backgroundColor: '#FFF3CD' },
+  hard: { backgroundColor: '#F8D7DA' },
+  unknown: { backgroundColor: '#E0E0E0' },
+  difficultyText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#000',
   },
 });

@@ -64,6 +64,13 @@
     "resources": "Resources",
     "profile": "Profile"
   },
+  "difficulty": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "doNotKnow": "Don't Know",
+    "noClue": "No Clue"
+  },
   "flashcards": {
     "title": "Flashcards",
     "description": "Practice pronunciation with random words from your word bank",
@@ -71,20 +78,18 @@
     "startPractice": "Start Practice",
     "wordsPracticed": "Words Practiced",
     "accuracy": "Accuracy",
-    "difficulty": {
-      "easy": "Easy",
-      "medium": "Medium",
-      "hard": "Hard"
-    }
+    "showPinyin": "Show Pinyin",
+    "hidePinyin": "Hide Pinyin"
   },
   "storyChain": {
     "title": "Story Chain",
+    "loading": "Loading word bank...",
     "description": "Create creative stories using the provided words",
-    "currentPrompt": "Current Prompt",
-    "yourStory": "Your Story",
-    "exampleStories": "Example Stories",
-    "submitStory": "Submit Story",
-    "storyPlaceholder": "Write your story using the words above..."
+    "instructions": "Using the three words below, create a short story. Please tap the button below to start recording.",
+    "stopRecording": "Stop Recording",
+    "startRecording": "Start Recording",
+    "changeWords": "Change Words",
+    "selectDifficultyDescriptions": "Select an option based on how difficult you think it is to create a story and pronounce the words:"
   },
   "delayedFeedback": {
     "title": "Delayed Feedback",

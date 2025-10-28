@@ -1,122 +1,212 @@
+// app/story-chain.tsx
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { router } from 'expo-router';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import wordBankData from '@/assets/word-bank/word-bank.json';
+
+// ---- Types (lightweight to keep keys with hyphens) ----
+type WordItem = {
+  level: number;
+  ['traditional_chinese']: string;
+  ['simplified_chinese']: string;
+  pinyin: string;
+  score?: number; // dynamic field added at runtime
+};
 
 export default function StoryChainScreen() {
   const { t } = useTranslation();
-  const [storyText, setStoryText] = useState('');
 
-  const handleBack = () => {
-    router.back();
+  const [bank, setBank] = useState<WordItem[]>([]);
+  const [promptWords, setPromptWords] = useState<WordItem[]>([]);
+  const [isRecording, setIsRecording] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+
+  // simple timer for the recording UI (no real audio)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  useEffect(() => {
+    if (isRecording) {
+      timerRef.current = setInterval(() => setElapsed((s) => s + 1), 1000);
+    } else if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [isRecording]);
+
+  // initialize bank with score=0 for SRS
+  useEffect(() => {
+    const init = (wordBankData as WordItem[]).map((w) => ({ ...w, score: 0 }));
+    setBank(init);
+    setPromptWords(pickPrompt(init, 3));
+  }, []);
+
+  // --------- SRS helpers ----------
+  // weight: lower score => higher weight; clamp scores to [-3, 3]
+  const weightOf = (w: WordItem) => 1 / (1 + Math.exp(Math.max(-3, Math.min(3, w.score ?? 0))));
+  // sample without replacement by weights
+  const pickPrompt = (pool: WordItem[], n: number): WordItem[] => {
+    const selected: WordItem[] = [];
+    const used = new Set<number>();
+    for (let k = 0; k < Math.min(n, pool.length); k++) {
+      const weights = pool.map((w, i) => (used.has(i) ? 0 : weightOf(w)));
+      const total = weights.reduce((a, b) => a + b, 0);
+      if (total <= 0) break;
+      let r = Math.random() * total;
+      let idx = 0;
+      for (; idx < weights.length; idx++) {
+        r -= weights[idx];
+        if (r <= 0) break;
+      }
+      used.add(idx);
+      selected.push(pool[idx]);
+    }
+    return selected;
   };
 
-  const promptWords = ['adventure', 'mountain', 'treasure'];
+  const nextPrompt = (updated: WordItem[]) => {
+    setBank(updated);
+    setPromptWords(pickPrompt(updated, 3));
+    setIsRecording(false);
+    setElapsed(0);
+  };
 
-  const exampleStories = [
-    {
-      id: 1,
-      words: ['forest', 'mystery', 'journey'],
-      story: 'In the deep forest, a mysterious journey began when the old map was discovered.',
-      difficulty: 'easy'
-    },
-    {
-      id: 2,
-      words: ['castle', 'dragon', 'princess'],
-      story: 'The ancient castle stood tall as the brave knight approached to rescue the princess from the fierce dragon.',
-      difficulty: 'medium'
-    },
-    {
-      id: 3,
-      words: ['space', 'alien', 'discovery'],
-      story: 'The space explorer made an incredible discovery when encountering a friendly alien civilization.',
-      difficulty: 'hard'
-    },
-  ];
+  // --------- UI handlers ----------
+  const handleBack = () => router.back();
+
+  const toggleRecording = () => {
+    setIsRecording((prev) => !prev);
+    // purely UI; no actual audio capture
+  };
+
+  // Adjust score based on performance
+  const handleResponse = (difficulty: string) => {
+    const ids = new Set(promptWords.map((w) => w['simplified_chinese']));
+    const updated = bank.map(w => {
+      if (ids.has(w['simplified_chinese'])) {
+        let delta = 0;
+        if (difficulty === t('difficulty.easy')) delta = 1.0;
+        else if (difficulty === t('difficulty.medium')) delta = 0.3;
+        else if (difficulty === t('difficulty.hard')) delta = -0.7;
+        else if (difficulty === t('difficulty.doNotKnow')) delta = -1.0;
+        return { ...w, score: Math.max(-3, Math.min(3, (w.score ?? 0) + delta)) };
+      }
+      return w;
+    });
+
+    nextPrompt(updated);
+  };
+
+  // small helper for mm:ss
+  const timeLabel = useMemo(() => {
+    const m = Math.floor(elapsed / 60)
+      .toString()
+      .padStart(2, '0');
+    const s = (elapsed % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }, [elapsed]);
+
+  // guard
+  if (!promptWords.length) {
+    return (
+      <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+            <IconSymbol name="chevron.left" size={24} color="#007AFF" />
+          </TouchableOpacity>
+          <ThemedText type="title" style={styles.title}>{t('storyChain.title')}</ThemedText>
+          <View style={styles.placeholder} />
+        </View>
+        <View style={[styles.center, { padding: 24 }]}>
+          <ThemedText>{t('storyChain.loading')}</ThemedText>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={handleBack} style={styles.backButton}>
           <IconSymbol name="chevron.left" size={24} color="#007AFF" />
         </TouchableOpacity>
-        <ThemedText type="title" style={styles.title}>{t('home.storyChain')}</ThemedText>
+        <ThemedText type="title" style={styles.title}>{t('storyChain.title')}</ThemedText>
         <View style={styles.placeholder} />
       </View>
 
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        <ThemedView style={styles.contentContainer}>
-          <ThemedText style={styles.description}>
-            {t('home.createStoriesUsingWords')}
-          </ThemedText>
+      {/* Prompt words */}
+      <ThemedView style={styles.content}>
+        <ThemedText style={styles.instructions}>
+          {t('storyChain.instructions')}
+        </ThemedText>
 
-          <View style={styles.currentPromptContainer}>
-            <ThemedText type="subtitle" style={styles.sectionTitle}>Current Prompt</ThemedText>
-            <View style={styles.wordsContainer}>
-              {promptWords.map((word, index) => (
-                <View key={index} style={styles.wordChip}>
-                  <ThemedText style={styles.wordChipText}>{word}</ThemedText>
-                </View>
-              ))}
+        <View style={styles.wordsRow}>
+          {promptWords.map((w, i) => (
+            <View key={i} style={styles.wordChip}>
+              <ThemedText style={styles.wordChipText}>{w['simplified_chinese']}</ThemedText>
             </View>
+          ))}
+        </View>
+
+        {/* Recording UI (no actual audio) */}
+        <View style={styles.recorderCard}>
+          <View style={styles.timerRow}>
+            <IconSymbol name={isRecording ? 'record.circle.fill' : 'mic'} size={22} color={isRecording ? '#D32F2F' : '#007AFF'} />
+            <ThemedText style={[styles.timerText, isRecording && { color: '#D32F2F' }]}>{timeLabel}</ThemedText>
           </View>
 
-          <View style={styles.storyInputContainer}>
-            <ThemedText type="subtitle" style={styles.sectionTitle}>Your Story</ThemedText>
-            <TextInput
-              style={styles.storyInput}
-              placeholder="Write your story using the words above..."
-              placeholderTextColor="#8E8E93"
-              value={storyText}
-              onChangeText={setStoryText}
-              multiline
-              textAlignVertical="top"
-            />
-          </View>
-
-          <View style={styles.examplesContainer}>
-            <ThemedText type="subtitle" style={styles.sectionTitle}>Example Stories</ThemedText>
-            {exampleStories.map((example) => (
-              <View key={example.id} style={styles.exampleCard}>
-                <View style={styles.exampleWords}>
-                  {example.words.map((word, index) => (
-                    <View key={index} style={styles.exampleWordChip}>
-                      <ThemedText style={styles.exampleWordText}>{word}</ThemedText>
-                    </View>
-                  ))}
-                </View>
-                <ThemedText style={styles.exampleStory}>{example.story}</ThemedText>
-                <View style={[styles.difficultyBadge, 
-                  example.difficulty === 'easy' ? styles.easyBadge :
-                  example.difficulty === 'medium' ? styles.mediumBadge : styles.hardBadge
-                ]}>
-                  <ThemedText style={styles.difficultyText}>
-                    {example.difficulty}
-                  </ThemedText>
-                </View>
-              </View>
-            ))}
-          </View>
-
-          <TouchableOpacity style={styles.submitButton}>
-            <ThemedText style={styles.submitButtonText}>Submit Story</ThemedText>
-            <IconSymbol name="paperplane.fill" size={20} color="white" />
+          <TouchableOpacity
+            onPress={toggleRecording}
+            activeOpacity={0.9}
+            style={[styles.recordBtn, isRecording && styles.recordBtnActive]}
+          >
+            <IconSymbol name={isRecording ? 'stop.fill' : 'mic.fill'} size={28} color="#FFFFFF" />
+            <ThemedText style={styles.recordBtnText}>{isRecording ? t("storyChain.stopRecording") : t("storyChain.startRecording")}</ThemedText>
           </TouchableOpacity>
-        </ThemedView>
-      </ScrollView>
+
+          {/* Optional: a skip button to get a new set of words without rating */}
+          <TouchableOpacity onPress={() => nextPrompt(bank)} style={styles.skipBtn}>
+            <ThemedText style={styles.skipBtnText}>{t("storyChain.changeWords")}</ThemedText>
+          </TouchableOpacity>
+        </View>
+
+        {/* Difficulty feedback */}
+        <ThemedText style={[styles.instructions, { marginTop: 24 }]}>
+          {t('storyChain.selectDifficultyDescriptions')}
+        </ThemedText>
+
+        <View style={styles.rateGrid}>
+          {([t("difficulty.easy"), t("difficulty.medium"), t("difficulty.hard"), t("difficulty.noClue")] as const).map((label) => (
+            <TouchableOpacity
+              key={label}
+              onPress={() => handleResponse(label)}
+              style={[
+                styles.rateBtn,
+                label === t("difficulty.easy") && styles.easy,
+                label === t("difficulty.medium") && styles.medium,
+                label === t("difficulty.hard") && styles.hard,
+                label === t("difficulty.noClue") && styles.unknown,
+              ]}
+            >
+              <ThemedText style={styles.rateBtnText}>{label}</ThemedText>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ThemedView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
+  container: { flex: 1, backgroundColor: '#FFFFFF' },
+
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -126,136 +216,78 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#E5E5EA',
   },
-  backButton: {
-    padding: 8,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#000000',
-  },
-  placeholder: {
-    width: 40,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  contentContainer: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-  },
-  description: {
-    fontSize: 16,
-    color: '#000000',
-    marginBottom: 24,
-    lineHeight: 22,
-  },
-  currentPromptContainer: {
-    marginBottom: 24,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 12,
-    color: '#000000',
-  },
-  wordsContainer: {
+  backButton: { padding: 8 },
+  title: { fontSize: 20, fontWeight: '600', color: '#000000' },
+  placeholder: { width: 40 },
+
+  content: { flex: 1, paddingHorizontal: 20, paddingTop: 20 },
+  instructions: { fontSize: 16, color: '#000', lineHeight: 22 },
+
+  wordsRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
+    marginTop: 14,
+    marginBottom: 18,
   },
   wordChip: {
     backgroundColor: '#007AFF',
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 10,
     borderRadius: 20,
   },
-  wordChipText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  storyInputContainer: {
-    marginBottom: 24,
-  },
-  storyInput: {
+  wordChipText: { color: '#FFF', fontSize: 16, fontWeight: '700' },
+
+  recorderCard: {
     backgroundColor: '#F8F9FA',
-    borderRadius: 12,
-    padding: 16,
-    fontSize: 16,
-    color: '#000000',
-    minHeight: 120,
+    borderRadius: 16,
+    padding: 20,
     borderWidth: 1,
     borderColor: '#E5E5EA',
   },
-  examplesContainer: {
-    marginBottom: 32,
-  },
-  exampleCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: '#F2F2F7',
-  },
-  exampleWords: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 6,
-    marginBottom: 8,
-  },
-  exampleWordChip: {
-    backgroundColor: '#F0F0F0',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  exampleWordText: {
-    color: '#000000',
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  exampleStory: {
-    fontSize: 14,
-    color: '#000000',
-    lineHeight: 20,
-    marginBottom: 8,
-  },
-  difficultyBadge: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 8,
-  },
-  easyBadge: {
-    backgroundColor: '#E8F5E8',
-  },
-  mediumBadge: {
-    backgroundColor: '#FFF3CD',
-  },
-  hardBadge: {
-    backgroundColor: '#F8D7DA',
-  },
-  difficultyText: {
-    fontSize: 10,
-    fontWeight: '500',
-    color: '#000000',
-  },
-  submitButton: {
+  timerRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 14 },
+  timerText: { fontSize: 16, color: '#111', fontWeight: '600' },
+
+  recordBtn: {
     backgroundColor: '#007AFF',
     borderRadius: 16,
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    flexDirection: 'row',
+    paddingVertical: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
+    flexDirection: 'row',
+    gap: 8,
   },
-  submitButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-    marginRight: 8,
+  recordBtnActive: { backgroundColor: '#D32F2F' },
+  recordBtnText: { color: '#FFF', fontSize: 16, fontWeight: '700' },
+
+  skipBtn: {
+    marginTop: 12,
+    alignSelf: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    backgroundColor: '#E8F0FE',
   },
+  skipBtnText: { color: '#007AFF', fontSize: 14, fontWeight: '600' },
+
+  rateGrid: {
+    marginTop: 12,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  rateBtn: {
+    flexBasis: '48%',
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  easy: { backgroundColor: '#E8F5E8' },
+  medium: { backgroundColor: '#FFF3CD' },
+  hard: { backgroundColor: '#F8D7DA' },
+  unknown: { backgroundColor: '#E0E0E0' },
+  rateBtnText: { fontSize: 16, fontWeight: '700', color: '#000' },
+
+  center: { alignItems: 'center', justifyContent: 'center' },
 });

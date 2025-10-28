@@ -28,8 +28,13 @@
         "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS",
         "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_CONNECT",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.BLUETOOTH",
         "android.permission.BLUETOOTH_CONNECT"
-      ]
+      ],
+      "package": "com.anonymous.Capella"
     },
     "web": {
       "output": "static",

@@ -1,8 +1,10 @@
+# Takes the raw html file, extracts the words and output them to a json file
+
 import json
 import pandas as pd
 
 file_location = r'assets\word-bank\data.txt'
-
+    
 file = open(file_location, "r", encoding="utf-8")
 lines = file.readlines()
 file.close()
@@ -45,4 +47,3 @@ for i in range(cnt):
 
 with open(r'assets\word-bank\word-bank.json', 'w', encoding='utf-8') as f:
     json.dump(json_data, f, ensure_ascii=False, indent=4)
-
