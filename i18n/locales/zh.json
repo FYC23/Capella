@@ -9,7 +9,7 @@
   "home": {
     "title": "欢迎使用 Capella",
     "subtitle": "无障碍语音练习工具",
-    "todaysProgress": "今日进度",
+    "progress": "进度",
     "sessionsFinishedToday": "今日完成练习",
     "sessionsFinishedTotal": "总共完成练习",
     "recentPractice": "最近练习",

@@ -94,7 +94,7 @@ export default function HomeScreen() {
         </ThemedView>
 
         <ThemedView style={styles.statsContainer}>
-          <ThemedText type="subtitle" style={styles.sectionTitle}>{t('home.todaysProgress')}</ThemedText>
+          <ThemedText type="subtitle" style={styles.sectionTitle}>{t('home.progress')}</ThemedText>
           <View style={styles.statsGrid}>
             <View style={styles.statCard}>
               <ThemedText type="defaultSemiBold" style={styles.statNumber}>{stats.today}</ThemedText>

@@ -9,7 +9,7 @@
   "home": {
     "title": "Welcome to Capella",
     "subtitle": "Accessible tools for speech practice",
-    "todaysProgress": "Today's Progress",
+    "progress": "Progress",
     "sessionsFinishedToday": "Sessions Finished Today",
     "sessionsFinishedTotal": "Total Sessions Finished",
     "gamesPlayed": "Games Played",
