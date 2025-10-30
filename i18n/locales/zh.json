@@ -23,11 +23,13 @@
     "flashcards": "闪卡练习",
     "storyChain": "故事接龙",
     "delayedFeedback": "延迟反馈",
+    "choralSpeaking": "合唱说话",
     "pacedSpeaking": "节奏说话",
     "practiceWithRandomWords": "使用词库中的随机单词练习",
     "createStoriesUsingWords": "使用3个提供的单词创作故事",
     "rhythmBasedSpeaking": "基于节奏的说话练习",
-    "audioFeedbackTraining": "音频反馈训练工具"
+    "audioFeedbackTraining": "音频反馈训练工具",
+    "choralSpeakingDesc": "与模型声音同步说话"
   },
   "resources": {
     "title": "学习资源",
@@ -115,5 +117,36 @@
     "start": "开始",
     "sessionsToday": "今日练习",
     "rhythmAccuracy": "节奏准确率"
+  }
+  ,
+  "choralSpeaking": {
+    "title": "合唱说话",
+    "description": "与TTS语音一起说话以提高流利度。",
+    "passage": "练习文本",
+    "enterText": "输入自定义文本...",
+    "voice": "语音",
+    "defaultVoice": "默认",
+    "nextVoice": "下一个语音",
+    "selectVoice": "选择语音",
+    "noVoices": "没有可用语音",
+    "done": "完成",
+    "recordMyVoice": "录制我的声音",
+    "preview": "预览TTS",
+    "start": "开始练习",
+    "stop": "停止",
+    "session": "会话",
+    "elapsed": "已用时间",
+    "headphoneHint": "为获得最佳同步，请使用耳机并在安静环境。",
+    "sourcesTitle": "研究来源",
+    "source1": "合唱说话机制与流利度 (2025)",
+    "source2": "合唱言语的神经生物学与流利度 (2003)",
+    "viewCitations": "查看支持性研究",
+    "summaryBody": "合唱说话通过将你的说话时序和语调与一个清晰的外部示范声音同步，减少发声运动规划的自由度，强化听觉—运动耦合，并弱化不良的自我监控，从而稳定言语的前向流动。最佳效果出现在参照声音清晰且时间上对齐，并保持适中的语速时。",
+    "summaryTitle": "为什么有效",
+    "citationsTitle": "研究引用",
+    "close": "关闭",
+    "learnMore": "了解更多",
+    "learnLess": "收起",
+    "detailBody": "时间对齐为起始与节奏提供强有力的外部线索；清晰的语调有助于模仿重音与节律。适中的语速更易保持清晰与同步，这些因素在合唱情境下共同降低口吃频率。"
   }
 }

@@ -1,5 +1,7 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { IconSymbol } from '@/components/ui/icon-symbol';
+import { router } from 'expo-router';
 import { incrementRating } from '@/utils/usageStats';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +18,10 @@ export default function PracticeScreen() {
   const [wordBank, setWordBank] = useState<any[]>([]);
   const [currentWord, setCurrentWord] = useState<any | null>(null);
   const [isPinyinShown, setShowPinyin] = useState(false);
+  
+  const handleBack = () => {
+    router.back();
+  };
 
   useEffect(() => {
     // Initialize spaced repetition queue
@@ -67,46 +73,56 @@ export default function PracticeScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-      {/* Flashcard */}
-      <ThemedText style={styles.description}>
-        {t('home.practiceWithRandomWords')}
-      </ThemedText>
-      <ThemedView style={styles.flashcardContainer}>
-        <ThemedText style={styles.flashcardText}>
-          {currentWord["simplified_chinese"]}
-        </ThemedText>
-        {isPinyinShown && (
-          <ThemedText style={styles.pinyinText}>
-            {currentWord.pinyin}
-          </ThemedText>
-        )}
-      </ThemedView>
-
-      {/* Reveal Button */}
-      <TouchableOpacity onPress={handleReveal} style={styles.revealButton}>
-        <ThemedText style={styles.revealButtonText}>
-          {isPinyinShown ? t('flashcards.hidePinyin') : t('flashcards.showPinyin')}
-        </ThemedText>
-      </TouchableOpacity>
-
-      {/* Difficulty Buttons */}
-      <View style={styles.buttonGroup}>
-        {[t('difficulty.easy'), t('difficulty.medium'), t('difficulty.hard'), t('difficulty.doNotKnow')].map((label, idx) => (
-          <TouchableOpacity
-            key={idx}
-            style={[
-              styles.difficultyButton,
-              label === t('difficulty.easy') && styles.easy,
-              label === t('difficulty.medium') && styles.medium,
-              label === t('difficulty.hard') && styles.hard,
-              label === t('difficulty.doNotKnow') && styles.unknown,
-            ]}
-            onPress={() => handleResponse(label)}
-          >
-            <ThemedText style={styles.difficultyText}>{label}</ThemedText>
-          </TouchableOpacity>
-        ))}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+          <IconSymbol name="chevron.left" size={24} color="#007AFF" />
+        </TouchableOpacity>
+        <ThemedText type="title" style={styles.title}>{t('home.flashcards')}</ThemedText>
+        <View style={styles.placeholder} />
       </View>
+
+      <ThemedView style={styles.contentContainer}>
+        {/* Flashcard */}
+        <ThemedText style={styles.description}>
+          {t('home.practiceWithRandomWords')}
+        </ThemedText>
+        <ThemedView style={styles.flashcardContainer}>
+          <ThemedText style={styles.flashcardText}>
+            {currentWord["simplified_chinese"]}
+          </ThemedText>
+          {isPinyinShown && (
+            <ThemedText style={styles.pinyinText}>
+              {currentWord.pinyin}
+            </ThemedText>
+          )}
+        </ThemedView>
+
+        {/* Reveal Button */}
+        <TouchableOpacity onPress={handleReveal} style={styles.revealButton}>
+          <ThemedText style={styles.revealButtonText}>
+            {isPinyinShown ? t('flashcards.hidePinyin') : t('flashcards.showPinyin')}
+          </ThemedText>
+        </TouchableOpacity>
+
+        {/* Difficulty Buttons */}
+        <View style={styles.buttonGroup}>
+          {[t('difficulty.easy'), t('difficulty.medium'), t('difficulty.hard'), t('difficulty.doNotKnow')].map((label, idx) => (
+            <TouchableOpacity
+              key={idx}
+              style={[
+                styles.difficultyButton,
+                label === t('difficulty.easy') && styles.easy,
+                label === t('difficulty.medium') && styles.medium,
+                label === t('difficulty.hard') && styles.hard,
+                label === t('difficulty.doNotKnow') && styles.unknown,
+              ]}
+              onPress={() => handleResponse(label)}
+            >
+              <ThemedText style={styles.difficultyText}>{label}</ThemedText>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ThemedView>
     </SafeAreaView>
   );
 }
@@ -115,13 +131,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 20,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingHorizontal: 20,
     paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E5EA',
   },
   backButton: {
     padding: 8,
@@ -132,6 +150,11 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   placeholder: { width: 40 },
+  contentContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    flex: 1,
+  },
 
   
   description: {

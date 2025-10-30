@@ -41,6 +41,7 @@ export default function HomeScreen() {
       { id: 2, title: t('home.storyChain'),       icon: 'book.fill',  color: '#D1D1D6', screen: 'story-chain' },
       { id: 3, title: t('home.delayedFeedback'),  icon: 'person.fill',color: '#D1D1D6', screen: 'delayed-feedback' },
       { id: 4, title: t('home.pacedSpeaking'),    icon: 'house.fill', color: '#D1D1D6', screen: 'paced-speaking' },
+      { id: 5, title: t('home.choralSpeaking'),   icon: 'person.fill',color: '#D1D1D6', screen: 'choral-speaking' },
     ],
     [t]
   );
@@ -66,7 +67,7 @@ export default function HomeScreen() {
     { id: 2, title: t('home.storyChain'), subtitle: t('home.createStoriesUsingWords'), icon: 'book.fill', screen: 'story-chain' },
     { id: 3, title: t('home.pacedSpeaking'), subtitle: t('home.rhythmBasedSpeaking'), icon: 'person.fill', screen: 'paced-speaking' },
     { id: 4, title: t('home.delayedFeedback'), subtitle: t('home.audioFeedbackTraining'), icon: 'house.fill', screen: 'delayed-feedback' },
-    { id: 5, title: t('common.comingSoon'), subtitle: t('common.newToolsInDevelopment'), icon: 'house.fill' },
+    { id: 5, title: t('home.choralSpeaking'), subtitle: t('home.choralSpeakingDesc'), icon: 'person.fill', screen: 'choral-speaking' },
   ];
 
 

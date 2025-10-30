@@ -24,11 +24,13 @@
     "flashcards": "Flashcards",
     "storyChain": "Story Chain",
     "delayedFeedback": "Delayed Feedback",
+    "choralSpeaking": "Choral Speaking",
     "pacedSpeaking": "Paced Speaking",
     "practiceWithRandomWords": "Practice with random words from word bank",
     "createStoriesUsingWords": "Create stories using 3 provided words",
     "rhythmBasedSpeaking": "Rhythm-based speaking practice",
-    "audioFeedbackTraining": "Audio feedback training tool"
+    "audioFeedbackTraining": "Audio feedback training tool",
+    "choralSpeakingDesc": "Speak in sync with a model voice"
   },
   "resources": {
     "title": "Learning Resources",
@@ -116,5 +118,36 @@
     "start": "Start",
     "sessionsToday": "Sessions Today",
     "rhythmAccuracy": "Rhythm Accuracy"
+  }
+  ,
+  "choralSpeaking": {
+    "title": "Choral Speaking",
+    "description": "Speak together with a TTS voice to build fluency.",
+    "passage": "Passage",
+    "enterText": "Enter custom text...",
+    "voice": "Voice",
+    "defaultVoice": "Default",
+    "nextVoice": "Next Voice",
+    "selectVoice": "Select Voice",
+    "noVoices": "No voices available",
+    "done": "Done",
+    "recordMyVoice": "Record my voice",
+    "preview": "Preview TTS",
+    "start": "Start Session",
+    "stop": "Stop",
+    "session": "Session",
+    "elapsed": "Elapsed",
+    "headphoneHint": "For best sync, use headphones and a quiet room.",
+    "sourcesTitle": "Research sources",
+    "source1": "Choral speaking mechanisms and fluency (2025)",
+    "source2": "Choral speech neurobiology and fluency effects (2003)",
+    "viewCitations": "View Supporting Research",
+    "summaryBody": "Choral speaking improves fluency by synchronizing your speech timing and prosody to a clear external model voice, which reduces the degrees of freedom in speech motor planning, strengthens auditory–motor coupling, and dampens maladaptive self‑monitoring—together stabilizing forward flow of articulation. Benefits are greatest when the reference is intelligible and temporally aligned, with moderate rates that preserve clarity.",
+    "summaryTitle": "Why It Works?",
+    "citationsTitle": "Research citations",
+    "close": "Close",
+    "learnMore": "Learn more",
+    "learnLess": "Show less",
+    "detailBody": "Timing alignment provides strong external cues for initiation and pacing, while intelligible prosody supports modeling of stress and rhythm. Moderate speaking rates preserve clarity and make synchrony easier, which together reduce stuttering frequency in choral contexts."
   }
 }

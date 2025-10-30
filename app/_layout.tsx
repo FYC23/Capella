@@ -17,13 +17,13 @@ export default function RootLayout() {
   return (
     <LanguageProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-          <Stack.Screen name="story-chain" options={{ headerShown: false }} />
-          <Stack.Screen name="delayed-feedback" options={{ headerShown: false }} />
-          <Stack.Screen name="paced-speaking" options={{ headerShown: false }} />
-          <Stack.Screen name="flashcards" options={{ title: '闪卡练习' }} />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal', headerShown: true }} />
+          <Stack.Screen name="story-chain" />
+          <Stack.Screen name="delayed-feedback" />
+          <Stack.Screen name="paced-speaking" />
+          <Stack.Screen name="flashcards" />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>
