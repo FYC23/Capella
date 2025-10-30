@@ -4,7 +4,7 @@ import { IconSymbol } from '@/components/ui/icon-symbol';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Modal, ScrollView, StyleSheet, TouchableOpacity, View, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDAF } from '../hooks/use-daf';
 
@@ -17,6 +17,7 @@ export default function DelayedFeedbackScreen() {
   const [showPitchPicker, setShowPitchPicker] = useState(false);
   const [volume, setVolume] = useState(0.8);
   const [showVolumePicker, setShowVolumePicker] = useState(false);
+  const [enableEffectsOnNonBluetooth, setEnableEffectsOnNonBluetooth] = useState(true);
   const [citationsVisible, setCitationsVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   
@@ -55,6 +56,7 @@ export default function DelayedFeedbackScreen() {
         delayTime,
         pitchShift,
         volume,
+        enableEffectsOnNonBluetooth,
       };
       await startDAF(config);
     }
@@ -146,7 +148,7 @@ export default function DelayedFeedbackScreen() {
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <ThemedView style={styles.contentContainer}>
           <ThemedText style={styles.description}>
-            Delayed Auditory Feedback (DAF) tool for speech fluency practice
+            {t('delayedFeedback.headerDescription')}
           </ThemedText>
 
           {/* Headphone Status */}
@@ -161,7 +163,7 @@ export default function DelayedFeedbackScreen() {
                 styles.statusText,
                 { color: isHeadphoneConnected ? "#34C759" : "#FF3B30" }
               ]}>
-                {isHeadphoneConnected ? 'Headphones Connected' : 'Headphones Required'}
+                {isHeadphoneConnected ? t('delayedFeedback.headphonesConnected') : t('delayedFeedback.headphonesRequired')}
               </ThemedText>
             </View>
             {audioDeviceInfo?.deviceName && (
@@ -178,7 +180,7 @@ export default function DelayedFeedbackScreen() {
 
           {/* Recording Controls */}
           <View style={styles.recordingContainer}>
-            <ThemedText type="subtitle" style={styles.sectionTitle}>Audio Controls</ThemedText>
+            <ThemedText type="subtitle" style={styles.sectionTitle}>{t('delayedFeedback.audioControls')}</ThemedText>
             
             <View style={styles.recordingButtons}>
               <TouchableOpacity 
@@ -208,19 +210,54 @@ export default function DelayedFeedbackScreen() {
                   color={isDAFActive ? "#34C759" : "#8E8E93"} 
                 />
                 <ThemedText style={[styles.dafButtonText, isDAFActive && styles.dafActiveText]}>
-                  {isLoading ? 'Loading...' : (isDAFActive ? 'Stop DAF' : 'Start DAF')}
+                  {isLoading ? t('delayedFeedback.loading') : (isDAFActive ? t('delayedFeedback.stopDAF') : t('delayedFeedback.startDAF'))}
                 </ThemedText>
               </TouchableOpacity>
             </View>
             
             <ThemedText style={styles.recordLabel}>
-              {isRecording ? 'Recording...' : 'Tap to Record'}
+              {isRecording ? t('delayedFeedback.recording') : t('delayedFeedback.tapToRecord')}
             </ThemedText>
           </View>
 
+      {/* Volume Controls */}
+      <View style={styles.controlsContainer}>
+        <ThemedText type="subtitle" style={styles.sectionSubtitle}>{t('delayedFeedback.volume')}</ThemedText>
+        <TouchableOpacity 
+          style={styles.valueButton}
+          onPress={() => setShowVolumePicker(true)}
+        >
+          <ThemedText style={styles.pitchValue}>{volume.toFixed(1)}</ThemedText>
+          <IconSymbol name="chevron.left" size={20} color="#007AFF" />
+        </TouchableOpacity>
+      </View>
+
+          {/* Effects Toggle and Explanation */}
+          <ThemedView style={styles.whyCard}>
+            <View style={styles.whyHeaderRow}>
+              <IconSymbol name="info.circle.fill" size={18} color="#6C757D" />
+              <ThemedText type="subtitle" style={[styles.sectionTitle, { marginBottom: 0 }]}>{t('delayedFeedback.effectsStabilityTitle')}</ThemedText>
+            </View>
+            <ThemedText style={styles.whyText}>
+              {t('delayedFeedback.effectsStabilityBody')}
+            </ThemedText>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 12, justifyContent: 'space-between' }}>
+              <ThemedText style={{ color: '#000000' }}>{t('delayedFeedback.enableEffectsOnNonBluetooth')}</ThemedText>
+              <Switch
+                value={enableEffectsOnNonBluetooth}
+                onValueChange={setEnableEffectsOnNonBluetooth}
+              />
+            </View>
+            {audioDeviceInfo && (
+              <ThemedText style={[styles.whyText, { marginTop: 8 }]}>
+                {t('delayedFeedback.currentOutputPrefix')} {audioDeviceInfo.deviceName ?? audioDeviceInfo.deviceType}. {t(enableEffectsOnNonBluetooth ? 'delayedFeedback.effectsStatusOn' : 'delayedFeedback.effectsStatusOff')}
+              </ThemedText>
+            )}
+          </ThemedView>
+
           {/* Delay Time Controls */}
           <View style={styles.controlsContainer}>
-            <ThemedText type="subtitle" style={styles.sectionSubtitle}>Delay Time</ThemedText>
+            <ThemedText type="subtitle" style={styles.sectionSubtitle}>{t('delayedFeedback.delayTime')}</ThemedText>
             <TouchableOpacity 
               style={styles.valueButton}
               onPress={() => setShowDelayPicker(true)}
@@ -232,26 +269,14 @@ export default function DelayedFeedbackScreen() {
 
           {/* Pitch Shift Controls */}
           <View style={styles.controlsContainer}>
-            <ThemedText type="subtitle" style={styles.sectionSubtitle}>Pitch Shift</ThemedText>
+            <ThemedText type="subtitle" style={styles.sectionSubtitle}>{t('delayedFeedback.pitchShift')}</ThemedText>
             <TouchableOpacity 
               style={styles.valueButton}
               onPress={() => setShowPitchPicker(true)}
             >
               <ThemedText style={styles.pitchValue}>
-                {pitchShift > 0 ? `+${pitchShift}` : pitchShift} semitones
+                {pitchShift > 0 ? `+${pitchShift}` : pitchShift} {t('delayedFeedback.semitonesSuffix')}
               </ThemedText>
-              <IconSymbol name="chevron.left" size={20} color="#007AFF" />
-            </TouchableOpacity>
-          </View>
-
-          {/* Volume Controls */}
-          <View style={styles.controlsContainer}>
-            <ThemedText type="subtitle" style={styles.sectionSubtitle}>Volume</ThemedText>
-            <TouchableOpacity 
-              style={styles.valueButton}
-              onPress={() => setShowVolumePicker(true)}
-            >
-              <ThemedText style={styles.pitchValue}>{volume.toFixed(1)}</ThemedText>
               <IconSymbol name="chevron.left" size={20} color="#007AFF" />
             </TouchableOpacity>
           </View>

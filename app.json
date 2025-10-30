@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Capella",
+    "name": "Capella Speech",
     "slug": "Capella",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/capella-favicon.png",
     "scheme": "capella",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -39,7 +39,7 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/capella-favicon.png"
     },
     "plugins": [
       "expo-router",

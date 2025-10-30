@@ -4,6 +4,9 @@ export interface DAFConfiguration {
   delayTime: number; // milliseconds
   pitchShift: number; // semitones
   volume: number; // 0.0 to 1.0
+  // If true (default), native enables effects only on non-Bluetooth routes.
+  // On Bluetooth HFP/A2DP/LE, effects will be disabled for stability.
+  enableEffectsOnNonBluetooth?: boolean;
 }
 
 export interface AudioDeviceInfo {
