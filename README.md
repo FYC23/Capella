@@ -1,5 +1,7 @@
 ## Capella Speech – Fluency Activities App
 
+[English](README.md) | [中文](README.zh.md)
+
 This app is developed by Capella Speech ([capella-speech.org](https://capella-speech.org)), a student-led organization raising awareness of speech impairments and curating resources for the community. Our goal with this app is to promote speech fluency for people who stutter through well-established practice activities and educational resources.
 
 Important: This app is not a clinical tool and is not a substitute for professional evaluation or therapy. If you are seeking clinical care, please consult a licensed speech-language pathologist.

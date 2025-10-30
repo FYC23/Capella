@@ -1,5 +1,7 @@
 ## Capella 语音 – 流利度练习应用（中文）
 
+[English](README.md) | [中文](README.zh.md)
+
 本应用由 Capella Speech（[capella-speech.org](https://capella-speech.org)）开发。Capella Speech 是一个由学生发起的组织，致力于提升公众对言语障碍的认识，并为社区整理与分享相关资源。本应用旨在通过一些广泛使用的练习活动与教育资源，帮助口吃者进行流利度练习与了解相关知识。
 
 重要提示：本应用并非临床工具，不能替代专业评估或治疗。如需获得临床帮助，请咨询有资质的言语治疗师。
