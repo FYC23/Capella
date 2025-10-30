@@ -3,9 +3,9 @@ import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { getLastUsedMap, relativeLastUsedLabel, touchLastUsed } from '@/utils/lastUsed';
 import { router, useFocusEffect } from 'expo-router'; // ⬅ add useFocusEffect
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View, NativeModules } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getUsageSnapshot } from '@/utils/usageStats';
 
@@ -85,6 +85,28 @@ export default function HomeScreen() {
       return () => { mounted = false; };
     }, [])
   );
+
+  // Temporary: verify native DAF module presence and a basic call
+  useEffect(() => {
+    try {
+      // eslint-disable-next-line no-console
+      console.log('Native DAFModule present?', !!(NativeModules as any)?.DAFModule);
+      (async () => {
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const active = await (NativeModules as any).DAFModule?.isDAFActive?.();
+          // eslint-disable-next-line no-console
+          console.log('DAF active on boot?', active);
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.log('DAF call failed', e);
+        }
+      })();
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('DAF check failed to run', e);
+    }
+  }, []);
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>

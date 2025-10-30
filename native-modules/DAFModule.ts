@@ -1,5 +1,4 @@
-// import { NativeEventEmitter, NativeModules } from 'react-native';
-// Commented out native module imports for mock implementation
+import { NativeEventEmitter, NativeModules, Platform } from 'react-native';
 
 export interface DAFConfiguration {
   delayTime: number; // milliseconds
@@ -142,29 +141,38 @@ class MockDAFModule implements DAFModuleInterface {
   }
 }
 
-// Use mock implementation if native module is not available
-// const DAFModule = NativeModules.DAFModule || new MockDAFModule();
-const DAFModule = new MockDAFModule(); // Force mock implementation for now
+// Resolve native module if available, otherwise fall back to mock
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const NativeDAF: any = (NativeModules as any)?.DAFModule;
+const DAFModule: DAFModuleInterface = NativeDAF ? NativeDAF : new MockDAFModule();
 
-// Event emitter for audio device changes
-// export const dafEventEmitter = new NativeEventEmitter(DAFModule);
-// Mock event emitter that doesn't rely on native modules
-export const dafEventEmitter = {
-  addListener: (eventName: string, callback: Function) => ({
-    remove: () => console.log(`Removed listener for ${eventName}`)
-  }),
-  emit: (eventName: string, data: any) => {
-    console.log(`Mock event emitted: ${eventName}`, data);
-  }
-};
+// Event emitter: if native module exists and supports RN events, use NativeEventEmitter;
+// otherwise provide a lightweight mock emitter compatible with current hook usage.
+export const dafEventEmitter = NativeDAF
+  ? new NativeEventEmitter(NativeDAF)
+  : {
+      addListener: (eventName: string, callback: Function) => ({
+        remove: () => console.log(`Removed listener for ${eventName}`),
+      }),
+      emit: (eventName: string, data: unknown) => {
+        console.log(`Mock event emitted: ${eventName}`, data);
+      },
+    };
 
 // Export the module with proper typing
 const dafModule = DAFModule as DAFModuleInterface;
 
 // Add debug method for testing
-(dafModule as any).setMockHeadphoneState = (connected: boolean) => {
-  (DAFModule as any).setMockHeadphoneState(connected);
-};
+// Provide mock-only debug helper without crashing when native is present
+try {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (dafModule as any).setMockHeadphoneState = (connected: boolean) => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (DAFModule as any).setMockHeadphoneState?.(connected);
+    } catch {}
+  };
+} catch {}
 
 export default dafModule;
 

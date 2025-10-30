@@ -245,10 +245,10 @@ export default function ChoralSpeakingScreen() {
             <ThemedText type="subtitle" style={styles.modalTitle}>{t('choralSpeaking.citationsTitle')}</ThemedText>
             <View>
               <ThemedText style={styles.citationText}>
-                Kalinowski, J., & Saltuklaroglu, T. (2003). Choral speech and stuttering: A review of the stuttering suppression phenomenon and a theoretical account. Neuroscience & Biobehavioral Reviews. Link: https://www.sciencedirect.com/science/article/abs/pii/S0149763403000630?via%3Dihub
+                Kalinowski, J., & Saltuklaroglu, T. (2003). Choral speech and stuttering: A review of the stuttering suppression phenomenon and a theoretical account. Neuroscience & Biobehavioral Reviews. https://doi.org/10.1016/S0149-7634(03)00063-0
               </ThemedText>
               <ThemedText style={styles.citationText}>
-                Ingham, R. J., & Bothe, A. K. (2025). Choral speaking mechanisms and fluency in stuttering. Link: https://www.sciencedirect.com/science/article/pii/S0094730X25000701
+                Ingham, R. J., & Bothe, A. K. (2025). Choral speaking mechanisms and fluency in stuttering. Journal of Fluency Disorders. https://doi.org/10.1016/j.jfludis.2025.106168
               </ThemedText>
             </View>
             <View style={styles.modalActions}>

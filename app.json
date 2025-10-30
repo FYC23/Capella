@@ -13,7 +13,8 @@
       "infoPlist": {
         "NSMicrophoneUsageDescription": "This app needs access to the microphone for delayed auditory feedback speech therapy.",
         "NSCameraUsageDescription": "This app needs access to the camera for video recording during speech therapy sessions."
-      }
+      },
+      "bundleIdentifier": "com.anonymous.Capella"
     },
     "android": {
       "adaptiveIcon": {

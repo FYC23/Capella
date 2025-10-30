@@ -2,7 +2,7 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,6 +15,10 @@ export default function DelayedFeedbackScreen() {
   const [pitchShift, setPitchShift] = useState(0); // semitones
   const [showDelayPicker, setShowDelayPicker] = useState(false);
   const [showPitchPicker, setShowPitchPicker] = useState(false);
+  const [volume, setVolume] = useState(0.8);
+  const [showVolumePicker, setShowVolumePicker] = useState(false);
+  const [citationsVisible, setCitationsVisible] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
   
   // Use the DAF hook
   const {
@@ -25,6 +29,8 @@ export default function DelayedFeedbackScreen() {
     error,
     startDAF,
     stopDAF,
+  
+  // Live config updates
   } = useDAF();
 
   const handleBack = () => {
@@ -48,18 +54,25 @@ export default function DelayedFeedbackScreen() {
       const config = {
         delayTime,
         pitchShift,
-        volume: 0.8, // Default volume
+        volume,
       };
       await startDAF(config);
     }
   };
 
   const handleDelayChange = (newDelay: number) => {
-    setDelayTime(Math.max(50, Math.min(500, newDelay)));
+    const clamped = Math.max(50, Math.min(500, newDelay));
+    setDelayTime(clamped);
   };
 
   const handlePitchChange = (newPitch: number) => {
-    setPitchShift(Math.max(-12, Math.min(12, newPitch)));
+    const clamped = Math.max(-12, Math.min(12, newPitch));
+    setPitchShift(clamped);
+  };
+
+  const handleVolumeChange = (newVol: number) => {
+    const clamped = Math.max(0.2, Math.min(1.0, newVol));
+    setVolume(parseFloat(clamped.toFixed(1)));
   };
 
   const delayPresets = [
@@ -77,6 +90,48 @@ export default function DelayedFeedbackScreen() {
     { label: '+6', value: 6 },
     { label: '+12', value: 12 },
   ];
+
+  const volumePresets = [
+    { label: '0.2', value: 0.2 },
+    { label: '0.5', value: 0.5 },
+    { label: '0.8', value: 0.8 },
+    { label: '1.0', value: 1.0 },
+  ];
+
+  // Apply live updates when active
+  useEffect(() => {
+    if (isDAFActive) {
+      // fire and forget; hook will guard and handle errors
+      (async () => {
+        try { await (await import('../native-modules/DAFModule')).default.updateDAFConfig({ delayTime }); } catch {}
+      })();
+    }
+  }, [isDAFActive, delayTime]);
+
+  useEffect(() => {
+    if (isDAFActive) {
+      (async () => {
+        try { await (await import('../native-modules/DAFModule')).default.updateDAFConfig({ pitchShift }); } catch {}
+      })();
+    }
+  }, [isDAFActive, pitchShift]);
+
+  useEffect(() => {
+    if (isDAFActive) {
+      (async () => {
+        try { await (await import('../native-modules/DAFModule')).default.updateDAFConfig({ volume }); } catch {}
+      })();
+    }
+  }, [isDAFActive, volume]);
+
+  // Safety: stop DAF if unmounting
+  useEffect(() => {
+    return () => {
+      if (isDAFActive) {
+        stopDAF().catch(() => {});
+      }
+    };
+  }, [isDAFActive, stopDAF]);
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
@@ -189,6 +244,46 @@ export default function DelayedFeedbackScreen() {
             </TouchableOpacity>
           </View>
 
+          {/* Volume Controls */}
+          <View style={styles.controlsContainer}>
+            <ThemedText type="subtitle" style={styles.sectionSubtitle}>Volume</ThemedText>
+            <TouchableOpacity 
+              style={styles.valueButton}
+              onPress={() => setShowVolumePicker(true)}
+            >
+              <ThemedText style={styles.pitchValue}>{volume.toFixed(1)}</ThemedText>
+              <IconSymbol name="chevron.left" size={20} color="#007AFF" />
+            </TouchableOpacity>
+          </View>
+
+          {/* Why it works (match choral-speaking formatting) */}
+          <ThemedView style={styles.summaryCard}>
+            <View style={styles.summaryHeaderRow}>
+              <IconSymbol name="lightbulb.fill" size={18} color="#FFD60A" />
+              <ThemedText type="subtitle" style={[styles.sectionTitle, { marginBottom: 0 }]}>Why it works</ThemedText>
+            </View>
+            <View style={styles.summaryInner}>
+              <ThemedText style={styles.summaryParagraph}>
+                Delayed Auditory Feedback can induce fluency in many (though not all) people who stutter by altering auditory timing and speech motor control.
+              </ThemedText>
+              <View style={styles.summaryActionsRow}>
+                <TouchableOpacity style={styles.pillBtn} onPress={() => setCitationsVisible(true)}>
+                  <IconSymbol name="book.fill" size={14} color="#000" />
+                  <ThemedText style={styles.pillBtnText}>View citations</ThemedText>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity style={styles.disclosureRow} onPress={() => setShowDetails(!showDetails)}>
+                <ThemedText style={styles.disclosureText}>{showDetails ? 'Learn less' : 'Learn more'}</ThemedText>
+                <IconSymbol name={showDetails ? 'chevron.up' : 'chevron.down'} size={14} color="#6C757D" />
+              </TouchableOpacity>
+              {showDetails && (
+                <ThemedText style={styles.detailsParagraph}>
+                  Research suggests subgroup differences in responsiveness to DAF, potentially related to auditory association cortex asymmetries. Your experience may vary; try different delay settings.
+                </ThemedText>
+              )}
+            </View>
+          </ThemedView>
+
           {/* Session Stats */}
           <View style={styles.statsContainer}>
             <View style={styles.statCard}>
@@ -287,6 +382,77 @@ export default function DelayedFeedbackScreen() {
                 </TouchableOpacity>
               ))}
             </ScrollView>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Volume Picker Modal */}
+      <Modal
+        visible={showVolumePicker}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowVolumePicker(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.pickerModal}>
+            <View style={styles.pickerHeader}>
+              <ThemedText type="subtitle" style={styles.pickerTitle}>Select Volume</ThemedText>
+              <TouchableOpacity 
+                style={styles.closeButton}
+                onPress={() => setShowVolumePicker(false)}
+              >
+                <IconSymbol name="xmark" size={20} color="#007AFF" />
+              </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.pickerScrollView}>
+              {volumePresets.map((preset, index) => (
+                <TouchableOpacity
+                  key={preset.value}
+                  style={[
+                    index === volumePresets.length - 1 ? styles.lastPickerOption : styles.pickerOption,
+                    volume === preset.value && styles.selectedPickerOption
+                  ]}
+                  onPress={() => {
+                    setVolume(preset.value);
+                    setShowVolumePicker(false);
+                  }}
+                >
+                  <ThemedText style={[
+                    styles.pickerOptionText,
+                    volume === preset.value && styles.selectedPickerOptionText
+                  ]}>
+                    {preset.label}
+                  </ThemedText>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Citations Modal (match choral-speaking formatting) */}
+      <Modal
+        visible={citationsVisible}
+        animationType="slide"
+        transparent
+        onRequestClose={() => setCitationsVisible(false)}
+      >
+        <View style={styles.modalBackdrop}>
+          <View style={styles.modalSheet}>
+            <ThemedText type="subtitle" style={styles.modalTitle}>Citations</ThemedText>
+            <View>
+              <ThemedText style={styles.citationText}>
+                Stuttering Foundation. Delayed Auditory Feedback. Link: https://www.stutteringhelp.org/delayed-auditory-feedback
+              </ThemedText>
+              <ThemedText style={styles.citationText}>
+                Cortex (1978). Foundational evidence for DAF effects. Link: https://doi.org/10.1016/S0010-9452(78)80047-1
+              </ThemedText>
+            </View>
+            <View style={styles.modalActions}>
+              <TouchableOpacity style={[styles.actionBtn, styles.primary]} onPress={() => setCitationsVisible(false)}>
+                <ThemedText style={styles.actionBtnText}>Close</ThemedText>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -496,6 +662,22 @@ const styles = StyleSheet.create({
     color: '#007AFF',
     fontWeight: '600',
   },
+  // Match choral-speaking summary styles
+  summaryCard: { backgroundColor: '#FFFFFF', borderRadius: 12, padding: 16, borderWidth: 1, borderColor: '#E5E5EA', marginBottom: 24 },
+  summaryHeaderRow: { flexDirection: 'row', alignItems: 'center', gap: 8 as any, marginBottom: 8 },
+  summaryInner: { maxWidth: 680, alignSelf: 'center', width: '100%' },
+  summaryParagraph: { color: '#000000', lineHeight: 22, marginTop: 2 },
+  detailsParagraph: { color: '#000000', lineHeight: 22, marginTop: 6 },
+  summaryActionsRow: { marginTop: 10, flexDirection: 'row' },
+  pillBtn: { flexDirection: 'row', alignItems: 'center', gap: 6 as any, paddingHorizontal: 8, paddingVertical: 10, borderRadius: 999, backgroundColor: '#EDEEF0', borderWidth: 1, borderColor: '#E0E0E5', shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 4, shadowOffset: { width: 0, height: 2 }, elevation: 2, alignSelf: 'flex-start' },
+  pillBtnText: { color: '#000000' },
+  disclosureRow: { flexDirection: 'row', alignItems: 'center', gap: 6 as any, marginTop: 8, alignSelf: 'flex-start' },
+  disclosureText: { color: '#6C757D' },
+  modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', justifyContent: 'flex-end' },
+  modalSheet: { backgroundColor: '#FFFFFF', borderTopLeftRadius: 16, borderTopRightRadius: 16, padding: 16 },
+  modalTitle: { color: '#000000', marginBottom: 8 },
+  modalActions: { marginTop: 12, flexDirection: 'row', justifyContent: 'flex-end' },
+  citationText: { color: '#000000', marginBottom: 10 },
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -553,5 +735,23 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     opacity: 0.5,
+  },
+  whyCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#E5E5EA',
+    marginBottom: 24,
+  },
+  whyHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8 as any,
+    marginBottom: 8,
+  },
+  whyText: {
+    color: '#000000',
+    lineHeight: 22,
   },
 });

@@ -12,6 +12,7 @@ export interface UseDAFReturn {
   stopDAF: () => Promise<boolean>;
   checkHeadphoneConnection: () => Promise<AudioDeviceInfo | null>;
   requestPermissions: () => Promise<boolean>;
+  updateConfig: (config: Partial<DAFConfiguration>) => Promise<boolean>;
 }
 
 export const useDAF = (): UseDAFReturn => {
@@ -146,6 +147,24 @@ export const useDAF = (): UseDAFReturn => {
     }
   }, []);
 
+  // Live update configuration while active
+  const updateConfig = useCallback(async (config: Partial<DAFConfiguration>): Promise<boolean> => {
+    try {
+      if (!isDAFActive) return true; // No-op if not active
+      setIsLoading(true);
+      setError(null);
+      const updated = await DAFModule.updateDAFConfig(config);
+      return !!updated;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to update DAF config';
+      setError(errorMessage);
+      console.error('Error updating DAF config:', err);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  }, [isDAFActive]);
+
   // Set up event listeners
   useEffect(() => {
     const deviceChangedListener = dafEventEmitter.addListener(
@@ -198,6 +217,16 @@ export const useDAF = (): UseDAFReturn => {
     };
   }, [isDAFActive, checkHeadphoneConnection, stopDAF]);
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (isDAFActive) {
+        // Fire and forget
+        DAFModule.stopDAF().catch(() => {});
+      }
+    };
+  }, [isDAFActive]);
+
   return {
     isDAFActive,
     isHeadphoneConnected,
@@ -208,5 +237,6 @@ export const useDAF = (): UseDAFReturn => {
     stopDAF,
     checkHeadphoneConnection,
     requestPermissions,
+    updateConfig,
   };
 };
