@@ -1,8 +1,27 @@
-# Welcome to your Expo app 👋
+## Capella Speech – Fluency Activities App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This app is developed by Capella Speech ([capella-speech.org](https://capella-speech.org)), a student-led organization raising awareness of speech impairments and curating resources for the community. Our goal with this app is to promote speech fluency for people who stutter through well-established practice activities and educational resources.
 
-## Get started
+Important: This app is not a clinical tool and is not a substitute for professional evaluation or therapy. If you are seeking clinical care, please consult a licensed speech-language pathologist.
+
+### What’s in the app
+
+- **Choral Speaking**: Speak along with a reference voice to leverage the well-known choral speech effect, which can temporarily increase fluency for many people who stutter. You control the content and pacing.
+- **Delayed Auditory Feedback (DAF)**: Hear your own voice with a short delay, a technique that can change speech rate and rhythm. The app provides adjustable delay settings.
+- **Flashcards**: Practice structured word and phrase lists with adjustable prompts. Designed for repetition and gradual difficulty.
+- **Paced Speaking (in progress)**: A metronome-like activity to encourage rhythmic speech pacing. Note: This activity is currently incomplete and may change.
+- **Story Chain**: Collaborative storytelling that encourages longer utterances in a low-pressure format.
+- **Resources**: Curated educational links and materials related to stuttering, therapy approaches, and community support.
+
+Again, these activities are for education and practice only—they are not medical treatment.
+
+### Project background
+
+- The original Capella app was implemented in Swift for iOS.
+- This repository is a newly updated rewrite in React Native (Expo) for cross-platform compatibility (iOS, Android, and web where feasible).
+- On iOS, DAF uses a native audio module bridged to React Native for low-latency processing (see `ios/Capella/DAFModule.swift` and `native-modules/DAFModule.ts`).
+
+## Getting started
 
 1. Install dependencies
 
@@ -10,41 +29,32 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Start the development server
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+Then open the app in one of the following:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- [Expo Go](https://expo.dev/go) (feature-limited, best for quick previews)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Project uses file-based routing; see the `app/` directory for screens and activities.
 
-## Get a fresh project
+## Tech overview
 
-When you're ready, run:
+- React Native (Expo), TypeScript
+- Native iOS audio module for DAF (Swift, bridged through Objective‑C)
+- Internationalization via `i18n/` with English and Chinese locales
+- Assets under `assets/` including icons and word-bank data
 
-```bash
-npm run reset-project
-```
+## Contributing
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Contributions are welcome. Please open an issue or pull request. By contributing, you agree that your contributions may be used under the project’s license.
 
-## Learn more
+## License
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+MIT
