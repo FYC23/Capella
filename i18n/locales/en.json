@@ -35,17 +35,27 @@
   "resources": {
     "title": "Learning Resources",
     "subtitle": "Educational materials for speech practice",
-    "speechTechniques": "Speech Techniques",
-    "speechTechniquesDesc": "Learn effective speaking strategies",
-    "practiceGuides": "Practice Guides",
-    "practiceGuidesDesc": "Step-by-step practice instructions",
-    "researchArticles": "Research Articles",
-    "researchArticlesDesc": "Evidence-based speech research",
+    "speechTechniques": "Educational Resources",
+    "speechTechniquesDesc": "What stuttering is; types and key facts",
+    "practiceGuides": "Awareness Content",
+    "practiceGuidesDesc": "Stories, culture, and anti‑stigma resources",
+    "researchArticles": "Professional Resources",
+    "researchArticlesDesc": "Find SLPs, telehealth, and low‑cost options",
     "supportCommunity": "Support Community",
-    "supportCommunityDesc": "Connect with other practitioners",
+    "supportCommunityDesc": "Associations, forums, local groups, youth programs",
     "supportHelp": "Support & Help",
     "practiceTips": "Practice Tips",
-    "getHelp": "Get Help"
+    "getHelp": "Get Help",
+    "awareness": {
+      "title": "Awareness Content",
+      "subtitle": "Stories, culture, pride, and resources",
+      "overview": "Overview",
+      "personalStories": "Personal stories",
+      "famousPeople": "Famous people who stutter",
+      "culturalAttitudes": "Cultural attitudes by region",
+      "pride": "Stuttering Pride",
+      "additionalResources": "Additional resources"
+    }
   },
   "profile": {
     "name": "John Doe",

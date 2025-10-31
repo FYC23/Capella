@@ -4,9 +4,11 @@ import { IconSymbol } from '@/components/ui/icon-symbol';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 
 export default function ResourcesScreen() {
   const { t } = useTranslation();
+  const router = useRouter();
   
   const resources = [
     {
@@ -55,6 +57,11 @@ export default function ResourcesScreen() {
               key={resource.id}
               style={styles.resourceCard}
               activeOpacity={0.7}
+              onPress={() => {
+                if (resource.id === 2) {
+                  router.push('/(tabs)/resources/awareness');
+                }
+              }}
             >
               <View style={[styles.iconContainer, { backgroundColor: resource.color }]}>
                 <IconSymbol name="house.fill" size={24} color="white" />

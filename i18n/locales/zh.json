@@ -34,17 +34,27 @@
   "resources": {
     "title": "学习资源",
     "subtitle": "语音练习教育材料",
-    "speechTechniques": "语音技巧",
-    "speechTechniquesDesc": "学习有效的说话策略",
-    "practiceGuides": "练习指南",
-    "practiceGuidesDesc": "分步练习说明",
-    "researchArticles": "研究文章",
-    "researchArticlesDesc": "基于证据的语音研究",
+    "speechTechniques": "教育资源",
+    "speechTechniquesDesc": "什么是口吃；类型与要点",
+    "practiceGuides": "意识内容",
+    "practiceGuidesDesc": "故事、文化与去污名资源",
+    "researchArticles": "专业资源",
+    "researchArticlesDesc": "寻找治疗师、远程诊疗、低成本途径",
     "supportCommunity": "支持社区",
-    "supportCommunityDesc": "与其他从业者联系",
+    "supportCommunityDesc": "协会、论坛、本地小组、青少年项目",
     "supportHelp": "支持与帮助",
     "practiceTips": "练习技巧",
-    "getHelp": "获取帮助"
+    "getHelp": "获取帮助",
+    "awareness": {
+      "title": "意识内容",
+      "subtitle": "故事、文化、自豪与资源",
+      "overview": "概览",
+      "personalStories": "个人故事",
+      "famousPeople": "知名口吃者",
+      "culturalAttitudes": "各地区文化态度",
+      "pride": "口吃自豪",
+      "additionalResources": "更多资源"
+    }
   },
   "profile": {
     "name": "张三",
