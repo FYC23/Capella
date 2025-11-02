@@ -45,6 +45,10 @@
     "supportHelp": "支持与帮助",
     "practiceTips": "练习技巧",
     "getHelp": "获取帮助",
+    "education": {
+      "title": "教育资源",
+      "overview": "概览"
+    },
     "awareness": {
       "title": "意识内容",
       "subtitle": "故事、文化、自豪与资源",
@@ -54,6 +58,14 @@
       "culturalAttitudes": "各地区文化态度",
       "pride": "口吃自豪",
       "additionalResources": "更多资源"
+    },
+    "professionalHelp": {
+      "title": "专业帮助",
+      "overview": "概览"
+    },
+    "community": {
+      "title": "支持社区",
+      "communityGroups": "社区团体"
     }
   },
   "profile": {

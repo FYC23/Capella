@@ -48,7 +48,25 @@ export default function TabLayout() {
       />
       {/** Hide nested awareness route from the tab bar */}
       <Tabs.Screen
+        name="resources/education"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
         name="resources/awareness"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="resources/professional-help"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="resources/community"
         options={{
           href: null,
         }}

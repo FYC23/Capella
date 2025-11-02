@@ -46,6 +46,10 @@
     "supportHelp": "Support & Help",
     "practiceTips": "Practice Tips",
     "getHelp": "Get Help",
+    "education": {
+      "title": "Educational Resources",
+      "overview": "Overview"
+    },
     "awareness": {
       "title": "Awareness Content",
       "subtitle": "Stories, culture, pride, and resources",
@@ -55,6 +59,14 @@
       "culturalAttitudes": "Cultural attitudes by region",
       "pride": "Stuttering Pride",
       "additionalResources": "Additional resources"
+    },
+    "professionalHelp": {
+      "title": "Professional Help",
+      "overview": "Overview"
+    },
+    "community": {
+      "title": "Support Community",
+      "communityGroups": "Community Groups"
     }
   },
   "profile": {

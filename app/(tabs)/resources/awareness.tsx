@@ -34,6 +34,11 @@ export default function AwarenessScreen() {
               Stuttering Pride reframes stuttering from something to be hidden or “fixed” into a natural variation in human speech. It encourages advocacy and asking for needs, supporting mutual respect in communication.
             </ThemedText>
           </ThemedView>
+          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://zhuanlan.zhihu.com/p/637629023')}> 
+            <IconSymbol name="text.quote" size={20} color="#D1D1D6" />
+            <ThemedText style={styles.linkText}>中国最新数据：儿童语言障碍高达8.5%！很多家长不在意！</ThemedText>
+            <IconSymbol name="chevron.right" size={16} color="#C7C7CC" />
+          </TouchableOpacity>
         </ThemedView>
 
         <ThemedView style={styles.section}>
@@ -177,6 +182,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1,
+    marginBottom: 8,
   },
   callout: {
     flexDirection: 'row',

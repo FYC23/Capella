@@ -58,8 +58,17 @@ export default function ResourcesScreen() {
               style={styles.resourceCard}
               activeOpacity={0.7}
               onPress={() => {
-                if (resource.id === 2) {
+                if (resource.id === 1) {
+                  router.push('/(tabs)/resources/education');
+                }
+                else if (resource.id === 2) {
                   router.push('/(tabs)/resources/awareness');
+                }
+                else if (resource.id === 3) {
+                  router.push('/(tabs)/resources/professional-help');
+                }
+                else if (resource.id === 4) {
+                  router.push('/(tabs)/resources/community');
                 }
               }}
             >
