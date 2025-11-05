@@ -20,16 +20,16 @@ for line in lines:
         line = line[st + 7:]
         cnwd = line[:line.find('">')]
         tc_data.append(cnwd)
+    if 'has-text-danger' in line:
         cnt += 1
-    if 'zh-Hans' in line:
-        st = line.find('title="')
+        st = line.find('anger">')
         line = line[st + 7:]
-        cnwd = line[:line.find('">')]
+        cnwd = line[:line.find('</p>')]
         sc_data.append(cnwd)
-    elif 'cmn-Latn-pinyin' in line:
-        st = line.find('title="')
+    elif 'has-text-grey' in line:
+        st = line.find('-grey">')
         line = line[st + 7:]
-        py = line[:line.find('">')]
+        py = line[:line.find('</small>')]
         py_data.append(py)
 
 # save to json file
@@ -37,10 +37,10 @@ for line in lines:
 json_data = []
 
 for i in range(cnt):
-    l = (1 if i < 3000 else 2 if i < 7000 else 3)
+    l = 3
     json_data.append({
         "level": l,
-        "traditional-chinese": tc_data[i],
+        # "traditional-chinese": tc_data[i],
         "simplified-chinese": sc_data[i],
         "pinyin": py_data[i]
     })

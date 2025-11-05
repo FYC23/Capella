@@ -57328,5 +57328,505 @@
         "traditional_chinese": "生平",
         "simplified_chinese": "生平",
         "pinyin": "shēngpíng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "不期修古",
+        "pinyin": "bù qī xiū gǔ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "七窍冒火",
+        "pinyin": "qī qiào mào huǒ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "觉人觉世",
+        "pinyin": "jué rén jué shì"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "呆里撒奸",
+        "pinyin": "dāi lǐ sā jiān"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "地老天昏",
+        "pinyin": "dì lǎo tiān hūn"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "生灵涂炭",
+        "pinyin": "shēng líng tú tàn"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "贪夫徇财",
+        "pinyin": "tān fū xùn cái"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "三迭阳关",
+        "pinyin": "sān dié yáng guān"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "暮翠朝红",
+        "pinyin": "mù cuì cháo hóng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "规圜矩方",
+        "pinyin": "guī yuán jǔ fāng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "视如寇仇",
+        "pinyin": "shì rú kòu chóu"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "搽脂抹粉",
+        "pinyin": "chá zhī mǒ fěn"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "蹑影潜踪",
+        "pinyin": "niè yǐng qián zōng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "舞衫歌扇",
+        "pinyin": "wǔ shān gē shàn"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "仰人鼻息",
+        "pinyin": "yǎng rén bí xī"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "臭不可当",
+        "pinyin": "chòu bù kě dāng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "刮毛龟背",
+        "pinyin": "guā máo guī bèi"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "三饥两饱",
+        "pinyin": "sān jī liǎng bǎo"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "前仆后继",
+        "pinyin": "qián pū hòu jì"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "学究天人",
+        "pinyin": "xué jiū tiān rén"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "手无缚鸡之力",
+        "pinyin": "shǒu wú fù jī zhī lì"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "饮马投钱",
+        "pinyin": "yǐn mǎ tóu qián"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "淮王鸡狗",
+        "pinyin": "huái wáng jī gǒu"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "豪言壮语",
+        "pinyin": "háo yán zhuàng yǔ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "勇而无谋",
+        "pinyin": "yǒng ér wú móu"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "青蚨飞来",
+        "pinyin": "qīng fú fēi lái"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "谗言佞语",
+        "pinyin": "chán yán nìng yǔ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "凿龟数策",
+        "pinyin": "záo guī shǔ cè"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "心胸狭隘",
+        "pinyin": "xīn xiōng xiá ài"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "缺吃短穿",
+        "pinyin": "quē chī duǎn chuān"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "你东我西",
+        "pinyin": "nǐ dōng wǒ xī"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "杳无音信",
+        "pinyin": "yǎo wú yīn xìn"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "被甲据鞍",
+        "pinyin": "pī jiǎ jù ān"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "敬恭桑梓",
+        "pinyin": "jìng gōng sāng zǐ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "燕雀相贺",
+        "pinyin": "yàn què xiāng hè"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "喜从天降",
+        "pinyin": "xǐ cóng tiān jiàng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "食辨劳薪",
+        "pinyin": "shí biàn láo xīn"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "畏罪潜逃",
+        "pinyin": "wèi zuì qián táo"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "烧琴煮鹤",
+        "pinyin": "shāo qín zhǔ hè"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "目乱睛迷",
+        "pinyin": "mù luàn jīng mí"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "分香卖履",
+        "pinyin": "fēn xiāng mài lǚ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "光芒四射",
+        "pinyin": "guāng máng sì shè"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "火妻灰子",
+        "pinyin": "huǒ qī huī zǐ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "不吝珠玉",
+        "pinyin": "bù lìn zhū yù"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "齐齐整整",
+        "pinyin": "qí qí zhěng zhěng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "无拘无碍",
+        "pinyin": "wú jū wú ài"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "知希之贵",
+        "pinyin": "zhī xī zhī guì"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "河水不犯井水",
+        "pinyin": "hé shuǐ bù fàn jǐng shuǐ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "白旄黄钺",
+        "pinyin": "bái máo huáng yuè"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "慎终承始",
+        "pinyin": "shèn zhōng chéng shǐ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "神昏意乱",
+        "pinyin": "shén hūn yì luàn"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "绝路逢生",
+        "pinyin": "jué lù féng shēng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "析辩诡辞",
+        "pinyin": "xī biàn guǐ cí"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "拿云捉月",
+        "pinyin": "ná yún zhuō yuè"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "奸夫淫妇",
+        "pinyin": "jiān fū yín fù"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "患难相共",
+        "pinyin": "huàn nàn xiāng gòng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "郝隆晒书",
+        "pinyin": "hǎo lóng shài shū"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "努筋拔力",
+        "pinyin": "nǔ jīn bá lì"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "慎言慎行",
+        "pinyin": "shèn yán shèn xíng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "黄钟瓦釜",
+        "pinyin": "huáng zhōng wǎ fǔ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "稳如磐石",
+        "pinyin": "wěn rú pán shí"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "学富五车的意思",
+        "pinyin": "xué fù wǔ chē"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "深不可测",
+        "pinyin": "shēn bù kě cè"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "进旅退旅",
+        "pinyin": "jìn lǚ tuì lǚ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "差之毫厘，谬以千里",
+        "pinyin": "chā zhī háo lí ， miù yǐ qiān lǐ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "假仁纵敌",
+        "pinyin": "jiǎ rén zòng dí"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "破涕为笑",
+        "pinyin": "pò tì wéi xiào"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "迎头痛击",
+        "pinyin": "yìng tóu tòng jī"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "花狸狐哨",
+        "pinyin": "huā lí hú shào"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "悬珠编贝",
+        "pinyin": "xuán zhū biān bèi"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "东飘西泊",
+        "pinyin": "dōng piāo xī bó"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "监市履狶",
+        "pinyin": "jiān shì lǚ xī"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "凤舞龙飞",
+        "pinyin": "fèng wǔ lóng fēi"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "自鸣得意",
+        "pinyin": "zì míng dé yì"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "独立王国",
+        "pinyin": "dú lì wáng guó"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "不可枚举",
+        "pinyin": "bù kě méi jǔ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "反朴还淳",
+        "pinyin": "fǎn pǔ hái chún"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "怒发冲冠",
+        "pinyin": "nù fà chōng guān"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "习惯若自然",
+        "pinyin": "xí guàn ruò zì rán"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "气吞山河",
+        "pinyin": "qì tūn shān hé"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "虎穴龙潭",
+        "pinyin": "hǔ xué lóng tán"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "不问三七二十一",
+        "pinyin": "bù wèn sān qī èr shí yī"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "定时炸弹",
+        "pinyin": "dìng shí zhà dàn"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "一斑半点",
+        "pinyin": "yī bān bàn diǎn"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "穷侈极欲",
+        "pinyin": "qióng chǐ jí yù"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "畔道离经",
+        "pinyin": "pàn dào lí jīng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "手到擒来",
+        "pinyin": "shǒu dào qín lái"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "玉粒桂薪",
+        "pinyin": "yù lì guì xīn"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "言不愿行",
+        "pinyin": "yán bù yuàn xíng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "篝火狐鸣",
+        "pinyin": "gōu huǒ hú míng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "千古一时",
+        "pinyin": "qiān gǔ yī shí"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "救火扬沸",
+        "pinyin": "jiù huǒ yáng fèi"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "矫首昂视",
+        "pinyin": "jiǎo shǒu áng shì"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "慌做一堆",
+        "pinyin": "huāng zuò yī duī"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "说千道万",
+        "pinyin": "shuō qiān dào wàn"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "喟然叹息",
+        "pinyin": "kuì rán tàn xī"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "赴汤投火",
+        "pinyin": "fù tāng tóu huǒ"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "苟且因循",
+        "pinyin": "gǒu qiě yīn xún"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "一声不响",
+        "pinyin": "yī shēng bù xiǎng"
+    },
+    {
+        "level": 3,
+        "simplified-chinese": "心慈好善",
+        "pinyin": "xīn cí hào shàn"
     }
 ]
