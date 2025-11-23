@@ -45,27 +45,52 @@
     "supportHelp": "支持与帮助",
     "practiceTips": "练习技巧",
     "getHelp": "获取帮助",
-    "education": {
-      "title": "教育资源",
-      "overview": "概览"
-    },
     "awareness": {
       "title": "意识内容",
       "subtitle": "故事、文化、自豪与资源",
       "overview": "概览",
+      "overviewBody": "口吃自豪（Stuttering Pride）将口吃从需要隐藏或“修复”的问题重新框定为一种正常的语言差异。它鼓励倡导与表达需求，支持在交流中的相互尊重。",
+      "chinaDataLink": "中国最新数据：儿童语言障碍高达8.5%！很多家长不在意！",
       "personalStories": "个人故事",
+      "link_mystutteringlife": "我的口吃生活（My Stuttering Life）",
+      "link_stuttertalk": "口吃谈话（StutterTalk）",
+      "link_stutteringsociety": "口吃协会（The Stuttering Society）",
+      "link_say_storytelling": "SAY — 故事项目",
       "famousPeople": "知名口吃者",
+      "famousPeopleList": [
+        "艾米莉·布朗特 — 演员",
+        "詹姆斯·厄尔·琼斯 — 演员与配音名人",
+        "乔·拜登（美国总统）",
+        "詹姆斯·厄尔·琼斯 — 演员"
+      ],
       "culturalAttitudes": "各地区文化态度",
+      "culturalAttitudesList": [
+        "欧美国家（美国/加拿大/英国）：通过倡导与教育逐步提高意识；在正式场合中耻辱感仍可能存在。",
+        "东亚（中国/日本/韩国）：强调流利与快速表达，可能给口吃者增加压力。",
+        "中东与南亚地区：误解可能将口吃归因于紧张或自信不足。"
+      ],
       "pride": "口吃自豪",
-      "additionalResources": "更多资源"
+      "prideBody": "口吃自豪运动鼓励个体为自己的交流需求发声——请求耐心、要求更多对话时间，或选择不掩饰不顺畅的片刻。倡导有助于建立自信，并促进交流中的相互尊重。",
+      "additionalResources": "更多资源",
+      "link_stutteringhelp": "口吃基金会 — stutteringhelp.org",
+      "link_westutter": "美国国家口吃协会 — westutter.org",
+      "link_stamma": "英国口吃协会（STAMMA） — stamma.org"
     },
     "professionalHelp": {
       "title": "专业帮助",
-      "overview": "概览"
+      "overview": "概览",
+      "link1": "口吃治疗方法总览：临床5种主流疗程比较",
+      "link2": "从特殊教育视角浅谈两岸语言治疗之发展"
     },
     "community": {
       "title": "支持社区",
-      "communityGroups": "社区团体"
+      "communityGroups": "社区团体",
+      "link1": "语声社企 (Speechearing)"
+    },
+    "education": {
+      "title": "教育资源",
+      "overview": "概览",
+      "link1": "口吃资源：35 位名人故事、绘本、Podcast、科技工具、书单、研究（2025 更新）"
     }
   },
   "profile": {

@@ -46,27 +46,52 @@
     "supportHelp": "Support & Help",
     "practiceTips": "Practice Tips",
     "getHelp": "Get Help",
-    "education": {
-      "title": "Educational Resources",
-      "overview": "Overview"
-    },
     "awareness": {
       "title": "Awareness Content",
       "subtitle": "Stories, culture, pride, and resources",
       "overview": "Overview",
+      "overviewBody": "Stuttering Pride reframes stuttering from something to be hidden or “fixed” into a natural variation in human speech. It encourages advocacy, asking for needs, and supports mutual respect in communication.",
+      "chinaDataLink": "China — new data: childhood language disorders up to 8.5%; many parents overlook this",
       "personalStories": "Personal stories",
+      "link_mystutteringlife": "My Stuttering Life",
+      "link_stuttertalk": "StutterTalk",
+      "link_stutteringsociety": "The Stuttering Society",
+      "link_say_storytelling": "SAY – Storytelling Projects",
       "famousPeople": "Famous people who stutter",
+      "famousPeopleList": [
+        "Emily Blunt — Actor",
+        "James Earl Jones — Actor & Voice Icon",
+        "President Joe Biden",
+        "Samuel L. Jackson — Actor"
+      ],
       "culturalAttitudes": "Cultural attitudes by region",
+      "culturalAttitudesList": [
+        "Western countries (US/Canada/UK): Growing awareness through advocacy and education; stigma may persist in formal settings.",
+        "East Asia (China/Japan/Korea): Emphasis on fluent, fast speech can increase pressure on people who stutter.",
+        "Middle Eastern & South Asian regions: Misunderstandings may frame stuttering as nervousness or lack of confidence."
+      ],
       "pride": "Stuttering Pride",
-      "additionalResources": "Additional resources"
+      "prideBody": "Stuttering Pride encourages individuals to speak up about their needs — asking for patience, requesting extra time, or choosing not to hide moments of disfluency. Advocacy strengthens confidence and supports mutual respect in communication.",
+      "additionalResources": "Additional resources",
+      "link_stutteringhelp": "Stuttering Foundation — stutteringhelp.org",
+      "link_westutter": "National Stuttering Association — westutter.org",
+      "link_stamma": "STAMMA — stamma.org"
     },
     "professionalHelp": {
       "title": "Professional Help",
-      "overview": "Overview"
+      "overview": "Overview",
+      "link1": "Overview of stuttering therapy methods — comparison of 5 mainstream clinical approaches",
+      "link2": "Discussion on speech-language therapy development in Taiwan & mainland perspectives"
     },
     "community": {
       "title": "Support Community",
-      "communityGroups": "Community Groups"
+      "communityGroups": "Community Groups",
+      "link1": "Speechearing (social enterprise)"
+    },
+    "education": {
+      "title": "Educational Resources",
+      "overview": "Overview",
+      "link1": "Stutter resources: 35 celebrity stories, picture books, podcasts, tools, reading list, and research (2025 update)"
     }
   },
   "profile": {

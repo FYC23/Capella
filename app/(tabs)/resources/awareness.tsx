@@ -16,8 +16,11 @@ export default function AwarenessScreen() {
     Linking.openURL(url);
   };
 
+  const famousPeople = t('resources.awareness.famousPeopleList', { returnObjects: true }) as string[];
+  const culturalAttitudes = t('resources.awareness.culturalAttitudesList', { returnObjects: true }) as string[];
+
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}> 
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.replace('/(tabs)/resources')} style={styles.backButton}>
@@ -31,36 +34,36 @@ export default function AwarenessScreen() {
           <ThemedText type="subtitle" style={styles.sectionTitle}>{t('resources.awareness.overview')}</ThemedText>
           <ThemedView style={styles.card}>
             <ThemedText style={styles.body}>
-              Stuttering Pride reframes stuttering from something to be hidden or “fixed” into a natural variation in human speech. It encourages advocacy and asking for needs, supporting mutual respect in communication.
+              {t('resources.awareness.overviewBody')}
             </ThemedText>
           </ThemedView>
-          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://zhuanlan.zhihu.com/p/637629023')}> 
+          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://zhuanlan.zhihu.com/p/637629023')}>
             <IconSymbol name="text.quote" size={20} color="#D1D1D6" />
-            <ThemedText style={styles.linkText}>中国最新数据：儿童语言障碍高达8.5%！很多家长不在意！</ThemedText>
+            <ThemedText style={styles.linkText}>{t('resources.awareness.chinaDataLink')}</ThemedText>
             <IconSymbol name="chevron.right" size={16} color="#C7C7CC" />
           </TouchableOpacity>
         </ThemedView>
 
         <ThemedView style={styles.section}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>{t('resources.awareness.personalStories')}</ThemedText>
-          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://www.mystutteringlife.com/')}> 
+          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://www.mystutteringlife.com/')}>
             <IconSymbol name="text.quote" size={20} color="#D1D1D6" />
-            <ThemedText style={styles.linkText}>My Stuttering Life</ThemedText>
+            <ThemedText style={styles.linkText}>{t('resources.awareness.link_mystutteringlife')}</ThemedText>
             <IconSymbol name="chevron.right" size={16} color="#C7C7CC" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://stuttertalk.com/')}> 
+          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://stuttertalk.com/')}>
             <IconSymbol name="text.quote" size={20} color="#D1D1D6" />
-            <ThemedText style={styles.linkText}>StutterTalk</ThemedText>
+            <ThemedText style={styles.linkText}>{t('resources.awareness.link_stuttertalk')}</ThemedText>
             <IconSymbol name="chevron.right" size={16} color="#C7C7CC" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://www.stutteringsociety.com/category/stories/')}> 
+          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://www.stutteringsociety.com/category/stories/')}>
             <IconSymbol name="text.quote" size={20} color="#D1D1D6" />
-            <ThemedText style={styles.linkText}>The Stuttering Society</ThemedText>
+            <ThemedText style={styles.linkText}>{t('resources.awareness.link_stutteringsociety')}</ThemedText>
             <IconSymbol name="chevron.right" size={16} color="#C7C7CC" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://say.org/mystutterblog/')}> 
+          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://say.org/mystutterblog/')}>
             <IconSymbol name="text.quote" size={20} color="#D1D1D6" />
-            <ThemedText style={styles.linkText}>SAY – Storytelling Projects</ThemedText>
+            <ThemedText style={styles.linkText}>{t('resources.awareness.link_say_storytelling')}</ThemedText>
             <IconSymbol name="chevron.right" size={16} color="#C7C7CC" />
           </TouchableOpacity>
         </ThemedView>
@@ -68,29 +71,28 @@ export default function AwarenessScreen() {
         <ThemedView style={styles.section}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>{t('resources.awareness.famousPeople')}</ThemedText>
           <ThemedView style={styles.card}>
-            <ThemedText style={styles.body}>• Emily Blunt — Actor</ThemedText>
-            <ThemedText style={styles.body}>• James Earl Jones — Actor & Voice Icon</ThemedText>
-            <ThemedText style={styles.body}>• President Joe Biden</ThemedText>
-            <ThemedText style={styles.body}>• Samuel L. Jackson — Actor</ThemedText>
+            {famousPeople.map((p, i) => (
+              <ThemedText style={styles.body} key={i}>• {p}</ThemedText>
+            ))}
           </ThemedView>
         </ThemedView>
 
         <ThemedView style={styles.section}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>{t('resources.awareness.culturalAttitudes')}</ThemedText>
           <ThemedView style={styles.card}>
-            <ThemedText style={styles.body}>• Western countries (US/Canada/UK): Growing awareness through advocacy and education; stigma may persist in formal settings.</ThemedText>
-            <ThemedText style={styles.body}>• East Asia (China/Japan/Korea): Emphasis on fluent, fast speech can increase pressure on people who stutter.</ThemedText>
-            <ThemedText style={styles.body}>• Middle Eastern & South Asian regions: Misunderstandings may frame stuttering as nervousness or lack of confidence.</ThemedText>
+            {culturalAttitudes.map((c, i) => (
+              <ThemedText style={styles.body} key={i}>• {c}</ThemedText>
+            ))}
           </ThemedView>
         </ThemedView>
 
         <ThemedView style={styles.section}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>{t('resources.awareness.pride')}</ThemedText>
-          <ThemedView style={[styles.card, styles.callout]}> 
+          <ThemedView style={[styles.card, styles.callout]}>
             <IconSymbol name="megaphone.fill" size={20} color="#000000" />
             <View style={{ marginLeft: 12, flex: 1 }}>
               <ThemedText style={styles.body}>
-                Stuttering Pride is a movement that reframes stuttering from something to be hidden or "fixed" into a natural variation in human speech. It encourages individuals to speak up about their needs, whether that means asking for patience, requesting extra time in conversations, or choosing not to hide moments of disfluency. Advocacy strengthens confidence and supports mutual respect in communication.
+                {t('resources.awareness.prideBody')}
               </ThemedText>
             </View>
           </ThemedView>
@@ -98,19 +100,19 @@ export default function AwarenessScreen() {
 
         <ThemedView style={styles.section}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>{t('resources.awareness.additionalResources')}</ThemedText>
-          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://www.stutteringhelp.org')}> 
+          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://www.stutteringhelp.org')}>
             <IconSymbol name="link" size={20} color="#D1D1D6" />
-            <ThemedText style={styles.linkText}>Stuttering Foundation — stutteringhelp.org</ThemedText>
+            <ThemedText style={styles.linkText}>{t('resources.awareness.link_stutteringhelp')}</ThemedText>
             <IconSymbol name="chevron.right" size={16} color="#C7C7CC" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://westutter.org')}> 
+          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://westutter.org')}>
             <IconSymbol name="link" size={20} color="#D1D1D6" />
-            <ThemedText style={styles.linkText}>National Stuttering Association — westutter.org</ThemedText>
+            <ThemedText style={styles.linkText}>{t('resources.awareness.link_westutter')}</ThemedText>
             <IconSymbol name="chevron.right" size={16} color="#C7C7CC" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://stamma.org')}> 
+          <TouchableOpacity style={styles.linkButton} onPress={() => openLink('https://stamma.org')}>
             <IconSymbol name="link" size={20} color="#D1D1D6" />
-            <ThemedText style={styles.linkText}>STAMMA — stamma.org</ThemedText>
+            <ThemedText style={styles.linkText}>{t('resources.awareness.link_stamma')}</ThemedText>
             <IconSymbol name="chevron.right" size={16} color="#C7C7CC" />
           </TouchableOpacity>
         </ThemedView>
@@ -211,5 +213,3 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
 });
-
-
