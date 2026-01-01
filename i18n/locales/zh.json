@@ -88,6 +88,7 @@
   "tabs": {
     "home": "首页",
     "resources": "资源",
+    "metronome": "节拍器",
     "profile": "个人"
   },
   "difficulty": {
@@ -195,5 +196,24 @@
     "learnMore": "了解更多",
     "learnLess": "收起",
     "detailBody": "时间对齐为起始与节奏提供强有力的外部线索；清晰的语调有助于模仿重音与节律。适中的语速更易保持清晰与同步，这些因素在合唱情境下共同降低口吃频率。"
+  },
+  "metronome": {
+    "title": "触觉节拍器",
+    "subtitle": "连接您的蓝牙触觉节拍器设备",
+    "notConnected": "未连接设备",
+    "scanDescription": "扫描附近的 HLK 蓝牙设备进行连接",
+    "bluetoothDisabled": "蓝牙已关闭。请在设备设置中启用蓝牙。",
+    "permissionsRequired": "需要蓝牙权限才能扫描设备。",
+    "scanForDevices": "扫描设备",
+    "scanning": "扫描中...",
+    "stopScanning": "停止扫描",
+    "searchingForDevices": "正在搜索附近的 HLK 设备...",
+    "foundDevices": "发现的设备",
+    "signalStrength": "信号强度",
+    "connecting": "连接中...",
+    "connected": "已连接",
+    "bpm": "节拍速度",
+    "sendValue": "发送节拍",
+    "disconnect": "断开连接"
   }
 }

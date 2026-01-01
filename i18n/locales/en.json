@@ -89,6 +89,7 @@
   "tabs": {
     "home": "Home",
     "resources": "Resources",
+    "metronome": "Metronome",
     "profile": "Profile"
   },
   "difficulty": {
@@ -196,5 +197,24 @@
     "learnMore": "Learn more",
     "learnLess": "Show less",
     "detailBody": "Timing alignment provides strong external cues for initiation and pacing, while intelligible prosody supports modeling of stress and rhythm. Moderate speaking rates preserve clarity and make synchrony easier, which together reduce stuttering frequency in choral contexts."
+  },
+  "metronome": {
+    "title": "Haptic Metronome",
+    "subtitle": "Connect to your Bluetooth haptic metronome device",
+    "notConnected": "No Device Connected",
+    "scanDescription": "Scan for nearby HLK Bluetooth devices to connect",
+    "bluetoothDisabled": "Bluetooth is turned off. Please enable Bluetooth in your device settings.",
+    "permissionsRequired": "Bluetooth permissions are required to scan for devices.",
+    "scanForDevices": "Scan for Devices",
+    "scanning": "Scanning...",
+    "stopScanning": "Stop Scanning",
+    "searchingForDevices": "Searching for HLK devices nearby...",
+    "foundDevices": "Found Devices",
+    "signalStrength": "Signal",
+    "connecting": "Connecting...",
+    "connected": "Connected",
+    "bpm": "BPM",
+    "sendValue": "Send BPM",
+    "disconnect": "Disconnect"
   }
 }
