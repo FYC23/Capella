@@ -102,13 +102,14 @@ export default function MetronomeScreen() {
 
   const sendValue = async () => {
     setSendingValue(true);
-    // Device expects value = BPM + 49
-    await bleModule.sendValue(sliderValue + 49);
+    // Device expects value = BPM + 49, except 0 sends 0
+    const valueToSend = sliderValue === 0 ? 0 : sliderValue + 49;
+    await bleModule.sendValue(valueToSend);
     setSendingValue(false);
   };
 
   const adjustValue = (delta: number) => {
-    setSliderValue((prev) => Math.max(0, Math.min(100, prev + delta)));
+    setSliderValue((prev) => Math.max(0, Math.min(200, prev + delta)));
   };
 
   // Render disconnected state with scan button
@@ -263,7 +264,7 @@ export default function MetronomeScreen() {
 
           <View style={styles.sliderTrack}>
             <View
-              style={[styles.sliderFill, { width: `${sliderValue}%` }]}
+              style={[styles.sliderFill, { width: `${(sliderValue / 200) * 100}%` }]}
             />
           </View>
 
@@ -278,7 +279,7 @@ export default function MetronomeScreen() {
 
         <View style={styles.sliderLabels}>
           <ThemedText style={styles.sliderMinMax}>0</ThemedText>
-          <ThemedText style={styles.sliderMinMax}>100</ThemedText>
+          <ThemedText style={styles.sliderMinMax}>200</ThemedText>
         </View>
       </View>
 

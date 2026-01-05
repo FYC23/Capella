@@ -37,11 +37,11 @@ export default function HomeScreen() {
 
   const baseActions: Action[] = useMemo(
     () => [
-      { id: 1, title: t('home.flashcards'),       icon: 'house.fill', color: '#D1D1D6', screen: 'flashcards' },
-      { id: 2, title: t('home.storyChain'),       icon: 'book.fill',  color: '#D1D1D6', screen: 'story-chain' },
-      { id: 3, title: t('home.delayedFeedback'),  icon: 'person.fill',color: '#D1D1D6', screen: 'delayed-feedback' },
-      { id: 4, title: t('home.pacedSpeaking'),    icon: 'house.fill', color: '#D1D1D6', screen: 'paced-speaking' },
-      { id: 5, title: t('home.choralSpeaking'),   icon: 'person.fill',color: '#D1D1D6', screen: 'choral-speaking' },
+      { id: 1, title: t('home.flashcards'),       icon: 'house.fill', color: '#FF6B6B', screen: 'flashcards' },
+      { id: 2, title: t('home.storyChain'),       icon: 'book.fill',  color: '#4ECDC4', screen: 'story-chain' },
+      { id: 3, title: t('home.delayedFeedback'),  icon: 'person.fill',color: '#FFD93D', screen: 'delayed-feedback' },
+      { id: 4, title: t('home.pacedSpeaking'),    icon: 'house.fill', color: '#A78BFA', screen: 'paced-speaking' },
+      { id: 5, title: t('home.choralSpeaking'),   icon: 'person.fill',color: '#FB6F92', screen: 'choral-speaking' },
     ],
     [t]
   );
@@ -63,11 +63,11 @@ export default function HomeScreen() {
   };
 
   const allItems = [
-    { id: 1, title: t('home.flashcards'), subtitle: t('home.practiceWithRandomWords'), icon: 'house.fill', screen: 'flashcards' },
-    { id: 2, title: t('home.storyChain'), subtitle: t('home.createStoriesUsingWords'), icon: 'book.fill', screen: 'story-chain' },
-    { id: 3, title: t('home.pacedSpeaking'), subtitle: t('home.rhythmBasedSpeaking'), icon: 'person.fill', screen: 'paced-speaking' },
-    { id: 4, title: t('home.delayedFeedback'), subtitle: t('home.audioFeedbackTraining'), icon: 'house.fill', screen: 'delayed-feedback' },
-    { id: 5, title: t('home.choralSpeaking'), subtitle: t('home.choralSpeakingDesc'), icon: 'person.fill', screen: 'choral-speaking' },
+    { id: 1, title: t('home.flashcards'), subtitle: t('home.practiceWithRandomWords'), icon: 'house.fill', color: '#FF6B6B', screen: 'flashcards' },
+    { id: 2, title: t('home.storyChain'), subtitle: t('home.createStoriesUsingWords'), icon: 'book.fill', color: '#4ECDC4', screen: 'story-chain' },
+    { id: 3, title: t('home.pacedSpeaking'), subtitle: t('home.rhythmBasedSpeaking'), icon: 'person.fill', color: '#A78BFA', screen: 'paced-speaking' },
+    { id: 4, title: t('home.delayedFeedback'), subtitle: t('home.audioFeedbackTraining'), icon: 'house.fill', color: '#FFD93D', screen: 'delayed-feedback' },
+    { id: 5, title: t('home.choralSpeaking'), subtitle: t('home.choralSpeakingDesc'), icon: 'person.fill', color: '#FB6F92', screen: 'choral-speaking' },
   ];
 
 
@@ -119,13 +119,13 @@ export default function HomeScreen() {
         <ThemedView style={styles.statsContainer}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>{t('home.progress')}</ThemedText>
           <View style={styles.statsGrid}>
-            <View style={styles.statCard}>
-              <ThemedText type="defaultSemiBold" style={styles.statNumber}>{stats.today}</ThemedText>
-              <ThemedText style={styles.statLabel}>{t('home.sessionsFinishedToday')}</ThemedText>
+            <View style={[styles.statCard, { backgroundColor: '#E0F2FE' }]}>
+              <ThemedText type="defaultSemiBold" style={[styles.statNumber, { color: '#0369A1' }]}>{stats.today}</ThemedText>
+              <ThemedText style={[styles.statLabel, { color: '#075985' }]}>{t('home.sessionsFinishedToday')}</ThemedText>
             </View>
-            <View style={styles.statCard}>
-              <ThemedText type="defaultSemiBold" style={styles.statNumber}>{stats.total}</ThemedText>
-              <ThemedText style={styles.statLabel}>{t('home.sessionsFinishedTotal')}</ThemedText>
+            <View style={[styles.statCard, { backgroundColor: '#DCFCE7' }]}>
+              <ThemedText type="defaultSemiBold" style={[styles.statNumber, { color: '#15803D' }]}>{stats.total}</ThemedText>
+              <ThemedText style={[styles.statLabel, { color: '#166534' }]}>{t('home.sessionsFinishedTotal')}</ThemedText>
             </View>
           </View>
         </ThemedView>
@@ -166,8 +166,8 @@ export default function HomeScreen() {
               activeOpacity={0.7}
               onPress={() => item.screen ? navigateToScreen(item.screen) : null}
             >
-              <View style={styles.recentIcon}>
-                <IconSymbol name="house.fill" size={20} color="#D1D1D6" />
+              <View style={[styles.recentIcon, { backgroundColor: item.color + '20' }]}>
+                <IconSymbol name="house.fill" size={20} color={item.color} />
               </View>
               <View style={styles.recentContent}>
                 <ThemedText type="defaultSemiBold" style={styles.recentTitle}>
@@ -206,11 +206,11 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '700',
     marginBottom: 8,
-    color: '#000000',
+    color: '#1E3A8A',
   },
   subtitle: {
     fontSize: 16,
-    color: '#000000',
+    color: '#475569',
   },
   quickActionsContainer: {
     paddingHorizontal: 20,
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '600',
     marginBottom: 16,
-    color: '#000000',
+    color: '#1E3A8A',
   },
   quickActionsGrid: {
     flexDirection: 'row',
@@ -283,7 +283,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 8,
-    backgroundColor: '#F8F9FA',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
